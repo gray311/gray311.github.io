@@ -173,7 +173,7 @@
 	  </td>
 	  <td style="padding:20px;width:70%;vertical-align:middle">
 	    <!-- 在同一行显示 [MLLM] 和 papertitle -->
-	    <span style="color: #0000FF; font-weight: bold; font-size: 16px;">[MLLM]</span>
+	    <span style="color: #BED754; font-weight: bold; font-size: 16px;">[PEFT]</span>
 	    <span style="font-size: 16px;"><papertitle>MIXLORA: Enhancing Large Language Models Fine-Tuning with LoRA-based Mixture of Experts</papertitle></span>
 	
 	    <p style="margin:5px 0 5px 0px;font-size:15px">
@@ -186,6 +186,44 @@
 	      <a href="https://github.com/TUDB-Labs/MixLoRA" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px; border: 1px solid #000; padding: 3px 6px;">Website</a>
 	      <a href="https://arxiv.org/abs/2404.15159" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px; border: 1px solid #000; padding: 3px 6px;">PDF</a>
 	      <a href="https://github.com/TUDB-Labs/MixLoRA" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px; border: 1px solid #000; padding: 3px 6px;">GitHub</a>
+	    </div>
+	  </td>
+	</tr>
+
+	<tr onmouseout="MULTI_stop()" onmouseover="MULTI_start()">
+	  <td style="padding:20px;width:30%;vertical-align:middle">
+	    <div class="one">
+	      <div class="two" style="width:100%; height:100%; max-width:100%">
+	        <!-- 为图片添加阴影 -->
+	        <img id="MULTIImage" src='images/multi.png' style="width:100%; height:100%; max-width:100%; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);">
+	      </div>
+	    </div>
+	    <script type="text/javascript">
+	      function MULTI_start() {
+	        document.getElementById('MULTIImage').style.opacity = "0"; // 隐藏图片
+	      }
+	
+	      function MULTI_stop() {
+	        document.getElementById('MULTIImage').style.opacity = "1"; // 恢复图片显示
+	      }
+	      SK_Adapter_stop();
+	    </script>
+	  </td>
+	  <td style="padding:20px;width:70%;vertical-align:middle">
+	    <!-- 在同一行显示 [MLLM] 和 papertitle -->
+	    <span style="color: #0000FF; font-weight: bold; font-size: 16px;">[MLLM]</span>
+	    <span style="font-size: 16px;"><papertitle>MULTI: Multimodal Understanding Leaderboard with Text and Images</papertitle></span>
+	
+	    <p style="margin:5px 0 5px 0px;font-size:15px">
+	      Zichen Zhu, Yang Xu, Lu Chen, Jingkai Yang, Yichuan Ma, Yiming Sun, Hailin Wen, Jiaqi Liu, Jinyu Cai, <strong>Yingzi Ma</strong>strong>, Situo Zhang, Zihan Zhao, Liangtai Sun, and Kai Yu†
+	    </p>
+	    <p style="margin:5px 0 5px 0px;font-size: 16px;">Arxiv. 2024.</p>
+	    <p></p>
+	
+	    <div class="links">
+	      <a href="https://opendfm.github.io/MULTI-Benchmark/" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px; border: 1px solid #000; padding: 3px 6px;">Website</a>
+	      <a href="https://arxiv.org/abs/2402.03173" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px; border: 1px solid #000; padding: 3px 6px;">PDF</a>
+	      <a href="https://github.com/OpenDFM/MULTI-Benchmark" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px; border: 1px solid #000; padding: 3px 6px;">GitHub</a>
 	    </div>
 	  </td>
 	</tr>
