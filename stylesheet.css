@@ -144,6 +144,23 @@ ch_name {
   -webkit-transition: opacity .2s ease-in-out;
 }
 
+/* Paper figures: keep each figure's natural aspect ratio instead of
+   stretching it to fill the fixed 256x144 card. Targets only the research
+   images (ids ending in "Image"); Projects' gif-reveal hover is untouched. */
+.one:has(> .two > img[id$="Image"]) {
+  width: 100%;
+  height: auto;
+}
+.one:has(> .two > img[id$="Image"]) > .two {
+  position: static;
+  width: 100%;
+  height: auto !important;
+}
+.two > img[id$="Image"] {
+  height: auto !important;
+  object-fit: contain;
+}
+
 span.highlight {
   background-color: #ffffd0;
   /* background-image: url(/images/texture.png); */
