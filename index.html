@@ -45,7 +45,7 @@
             </td>
             <td style="padding:2.5%;width:67%;vertical-align:middle">
               <p >
-                I am a first-year PhD student majoring in Information Science at the University of Wisconsin Madison, advised by <a href='https://xiaocw11.github.io/'>Chaowei Xiao</a>. Previously, I collaborated with <a href='https://coai-sjtu.github.io/'>Asst. Prof. Lu Chen</a> in the language model group of the <a href='https://x-lance.sjtu.edu.cn/en'>XLANCE lab</a> at Shanghai Jiao Tong University.
+                I am a second-year PhD student majoring in Information Science at the University of Wisconsin Madison, advised by <a href='https://xiaocw11.github.io/'>Chaowei Xiao</a>. I obtained my B.Eng. in Artificial Intelligence from Sichuan University, where I was advised by <a href='https://merlintang.github.io/'>Prof. Mingjie Tang</a>. Previously, I collaborated with <a href='https://coai-sjtu.github.io/'>Asst. Prof. Lu Chen</a> in the language model group of the <a href='https://x-lance.sjtu.edu.cn/en'>XLANCE lab</a> at Shanghai Jiao Tong University.
               </p>
               <p>
                 I love playing basketball 🏀 and table tennis 🏓 in my free time. I am also open to collaborating with people to explore the possibilities of language models in various fields.
@@ -70,6 +70,9 @@
               <div style="margin:15px 0 0 0px;max-height:200px;overflow-y:auto;padding-right:10px;">
                 <ul style="margin:0;padding-left:20px;line-height:1.6;">
                   <!-- Add new items at the top. Format: <li><strong>[YYYY.MM]</strong> ... </li> -->
+                  <li><strong>[2026.06]</strong> I am joining the <strong>NVIDIA Autonomous Vehicle Research group</strong> as a research intern this summer! 🚗</li>
+                  <li><strong>[2026.02]</strong> <em>dVLM-AD: Enhance Diffusion Vision-Language-Model for Driving via Controllable Reasoning</em> was accepted to <strong>CVPR 2026 (Findings)</strong>! 🎉</li>
+                  <li><strong>[2026.01]</strong> <em>ARMOR: Aligning Secure and Safe Large Language Models via Meticulous Reasoning</em> was accepted to <strong>ICLR 2026</strong>! 🎉</li>
                   <li><strong>[2025.01]</strong> Our paper <em>Benchmarking Vision Language Model Unlearning via Fictitious Facial Identity Dataset</em> was accepted to <strong>ICLR 2025</strong>! 🎉</li>
                   <li><strong>[2024.09]</strong> I started my PhD in Information Science at the <strong>University of Wisconsin–Madison</strong>, advised by <a href='https://xiaocw11.github.io/'>Prof. Chaowei Xiao</a>. 🦡</li>
                   <li><strong>[2024.07]</strong> <em>Dolphins: Multimodal Language Model for Driving</em> was accepted to <strong>ECCV 2024</strong>! 🐬</li>
@@ -94,6 +97,214 @@
 
         <!-- ======= Reseach Items Section ======= -->
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+
+	<tr onmouseout="DVLM_stop()" onmouseover="DVLM_start()">
+	  <td style="padding:20px;width:30%;vertical-align:middle">
+	    <div class="one">
+	      <div class="two" style="width:100%; height:100%; max-width:100%">
+	        <img id="DVLMImage" src='images/dvlm_ad.png' style="width:100%; height:100%; max-width:100%; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);">
+	      </div>
+	    </div>
+	    <script type="text/javascript">
+	      function DVLM_start() { document.getElementById('DVLMImage').style.opacity = "0"; }
+	      function DVLM_stop() { document.getElementById('DVLMImage').style.opacity = "1"; }
+	      DVLM_stop();
+	    </script>
+	  </td>
+	  <td style="padding:20px;width:70%;vertical-align:middle">
+	    <span style="color: #F05941; font-weight: bold; font-size: 16px;">[Autonomous Driving]</span>
+	    <span style="font-size: 16px;"><papertitle>dVLM-AD: Enhance Diffusion Vision-Language-Model for Driving via Controllable Reasoning</papertitle></span>
+
+	    <p style="margin:5px 0 5px 0px;font-size:15px">
+	      <strong>Yingzi Ma</strong>, Yulong Cao, Wenhao Ding, Shuibai Zhang, Yan Wang, Boris Ivanovic, Ming Jiang, Marco Pavone and Chaowei Xiao&dagger;
+	    </p>
+	    <p style="margin:5px 0 5px 0px;font-size: 16px;">Published on CVPR 2026 (Findings).</p>
+	    <p></p>
+	    <!-- links: add <a class="btn ..."> buttons when URLs available -->
+	  </td>
+	</tr>
+
+	<tr onmouseout="ARMOR_stop()" onmouseover="ARMOR_start()">
+	  <td style="padding:20px;width:30%;vertical-align:middle">
+	    <div class="one">
+	      <div class="two" style="width:100%; height:100%; max-width:100%">
+	        <img id="ARMORImage" src='images/armor.png' style="width:100%; height:100%; max-width:100%; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);">
+	      </div>
+	    </div>
+	    <script type="text/javascript">
+	      function ARMOR_start() { document.getElementById('ARMORImage').style.opacity = "0"; }
+	      function ARMOR_stop() { document.getElementById('ARMORImage').style.opacity = "1"; }
+	      ARMOR_stop();
+	    </script>
+	  </td>
+	  <td style="padding:20px;width:70%;vertical-align:middle">
+	    <span style="color: #8E44AD; font-weight: bold; font-size: 16px;">[LLM]</span>
+	    <span style="font-size: 16px;"><papertitle>ARMOR: Aligning Secure and Safe Large Language Models via Meticulous Reasoning</papertitle></span>
+
+	    <p style="margin:5px 0 5px 0px;font-size:15px">
+	      Zhengyue Zhao, <strong>Yingzi Ma</strong>, Somesh Jha, Marco Pavone and Chaowei Xiao&dagger;
+	    </p>
+	    <p style="margin:5px 0 5px 0px;font-size: 16px;">Published on ICLR 2026.</p>
+	    <p></p>
+	    <!-- links: add <a class="btn ..."> buttons when URLs available -->
+	  </td>
+	</tr>
+
+	<tr onmouseout="SAFEVL_stop()" onmouseover="SAFEVL_start()">
+	  <td style="padding:20px;width:30%;vertical-align:middle">
+	    <div class="one">
+	      <div class="two" style="width:100%; height:100%; max-width:100%">
+	        <img id="SAFEVLImage" src='images/safevl.png' style="width:100%; height:100%; max-width:100%; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);">
+	      </div>
+	    </div>
+	    <script type="text/javascript">
+	      function SAFEVL_start() { document.getElementById('SAFEVLImage').style.opacity = "0"; }
+	      function SAFEVL_stop() { document.getElementById('SAFEVLImage').style.opacity = "1"; }
+	      SAFEVL_stop();
+	    </script>
+	  </td>
+	  <td style="padding:20px;width:70%;vertical-align:middle">
+	    <span style="color: #F05941; font-weight: bold; font-size: 16px;">[Autonomous Driving]</span>
+	    <span style="font-size: 16px;"><papertitle>SafeVL: Driving Safety Evaluation via Meticulous Reasoning in Vision Language Models</papertitle></span>
+
+	    <p style="margin:5px 0 5px 0px;font-size:15px">
+	      <strong>Yingzi Ma</strong>, Yulong Cao, Wenhao Ding, Yuxiao Chen, Xinshuo Weng, Yan Wang, Wenjie Luo, Yurong You, Boyi Li, Yue Wang, Rachel Luo, Sushant Veer, Xiaopeng Li, Approva Sharma, Ed Schmerling, Boris Ivanovic, Marco Pavone and Chaowei Xiao&dagger;
+	    </p>
+	    <p style="margin:5px 0 5px 0px;font-size: 16px;">Submitted to ECCV 2026.</p>
+	    <p></p>
+	    <!-- links: add <a class="btn ..."> buttons when URLs available -->
+	  </td>
+	</tr>
+
+	<tr onmouseout="GEODRIVE_stop()" onmouseover="GEODRIVE_start()">
+	  <td style="padding:20px;width:30%;vertical-align:middle">
+	    <div class="one">
+	      <div class="two" style="width:100%; height:100%; max-width:100%">
+	        <img id="GEODRIVEImage" src='images/geodrive-bench.png' style="width:100%; height:100%; max-width:100%; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);">
+	      </div>
+	    </div>
+	    <script type="text/javascript">
+	      function GEODRIVE_start() { document.getElementById('GEODRIVEImage').style.opacity = "0"; }
+	      function GEODRIVE_stop() { document.getElementById('GEODRIVEImage').style.opacity = "1"; }
+	      GEODRIVE_stop();
+	    </script>
+	  </td>
+	  <td style="padding:20px;width:70%;vertical-align:middle">
+	    <span style="color: #F05941; font-weight: bold; font-size: 16px;">[Autonomous Driving]</span>
+	    <span style="font-size: 16px;"><papertitle>GeoDrive-Bench: Benchmarking Region-Specific Multimodal Reasoning in Autonomous Driving</papertitle></span>
+
+	    <p style="margin:5px 0 5px 0px;font-size:15px">
+	      <strong>Yingzi Ma</strong>, Chaowei Xiao&dagger; and Ming Jiang
+	    </p>
+	    <p style="margin:5px 0 5px 0px;font-size: 16px;">Submitted to NeurIPS 2026.</p>
+	    <p></p>
+	    <!-- links: add <a class="btn ..."> buttons when URLs available -->
+	  </td>
+	</tr>
+
+	<tr onmouseout="MASKFORGE_stop()" onmouseover="MASKFORGE_start()">
+	  <td style="padding:20px;width:30%;vertical-align:middle">
+	    <div class="one">
+	      <div class="two" style="width:100%; height:100%; max-width:100%">
+	        <img id="MASKFORGEImage" src='images/maskforge.png' style="width:100%; height:100%; max-width:100%; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);">
+	      </div>
+	    </div>
+	    <script type="text/javascript">
+	      function MASKFORGE_start() { document.getElementById('MASKFORGEImage').style.opacity = "0"; }
+	      function MASKFORGE_stop() { document.getElementById('MASKFORGEImage').style.opacity = "1"; }
+	      MASKFORGE_stop();
+	    </script>
+	  </td>
+	  <td style="padding:20px;width:70%;vertical-align:middle">
+	    <span style="color: #C9184A; font-weight: bold; font-size: 16px;">[Safety]</span>
+	    <span style="font-size: 16px;"><papertitle>MaskForge: Structure-Aware Adaptive Attacks for Jailbreaking Diffusion Large Language Models</papertitle></span>
+
+	    <p style="margin:5px 0 5px 0px;font-size:15px">
+	      <strong>Yingzi Ma</strong>, Zhengyue Zhao, Xiaogeng Liu, Jason Xue, Yue Zhao and Chaowei Xiao&dagger;
+	    </p>
+	    <p style="margin:5px 0 5px 0px;font-size: 16px;">Submitted to NeurIPS 2026.</p>
+	    <p></p>
+	    <!-- links: add <a class="btn ..."> buttons when URLs available -->
+	  </td>
+	</tr>
+
+	<tr onmouseout="ONESTUDENT_stop()" onmouseover="ONESTUDENT_start()">
+	  <td style="padding:20px;width:30%;vertical-align:middle">
+	    <div class="one">
+	      <div class="two" style="width:100%; height:100%; max-width:100%">
+	        <img id="ONESTUDENTImage" src='images/promptsd.png' style="width:100%; height:100%; max-width:100%; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);">
+	      </div>
+	    </div>
+	    <script type="text/javascript">
+	      function ONESTUDENT_start() { document.getElementById('ONESTUDENTImage').style.opacity = "0"; }
+	      function ONESTUDENT_stop() { document.getElementById('ONESTUDENTImage').style.opacity = "1"; }
+	      ONESTUDENT_stop();
+	    </script>
+	  </td>
+	  <td style="padding:20px;width:70%;vertical-align:middle">
+	    <span style="color: #8E44AD; font-weight: bold; font-size: 16px;">[LLM]</span>
+	    <span style="font-size: 16px;"><papertitle>One Student, Many Teachers: Multi-Task On-Policy Distillation via Soft-Prompt Privileged Context</papertitle></span>
+
+	    <p style="margin:5px 0 5px 0px;font-size:15px">
+	      <strong>Yingzi Ma</strong>, Zichen Zhu, Ming Jiang and Chaowei Xiao&dagger;
+	    </p>
+	    <p style="margin:5px 0 5px 0px;font-size: 16px;">Submitted to EMNLP 2026.</p>
+	    <p></p>
+	    <!-- links: add <a class="btn ..."> buttons when URLs available -->
+	  </td>
+	</tr>
+
+	<tr onmouseout="TEACHERTOK_stop()" onmouseover="TEACHERTOK_start()">
+	  <td style="padding:20px;width:30%;vertical-align:middle">
+	    <div class="one">
+	      <div class="two" style="width:100%; height:100%; max-width:100%">
+	        <img id="TEACHERTOKImage" src='images/teacher_tokens.png' style="width:100%; height:100%; max-width:100%; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);">
+	      </div>
+	    </div>
+	    <script type="text/javascript">
+	      function TEACHERTOK_start() { document.getElementById('TEACHERTOKImage').style.opacity = "0"; }
+	      function TEACHERTOK_stop() { document.getElementById('TEACHERTOKImage').style.opacity = "1"; }
+	      TEACHERTOK_stop();
+	    </script>
+	  </td>
+	  <td style="padding:20px;width:70%;vertical-align:middle">
+	    <span style="color: #8E44AD; font-weight: bold; font-size: 16px;">[LLM]</span>
+	    <span style="font-size: 16px;"><papertitle>When Are Teacher Tokens Reliable? Position-Weighted On-Policy Self-Distillation for Reasoning</papertitle></span>
+
+	    <p style="margin:5px 0 5px 0px;font-size:15px">
+	      Xiaogeng Liu, Xinyan Wang, <strong>Yingzi Ma</strong>, Yechao Zhang and Chaowei Xiao&dagger;
+	    </p>
+	    <p style="margin:5px 0 5px 0px;font-size: 16px;">Preprint, arXiv 2026.</p>
+	    <p></p>
+	    <!-- links: add <a class="btn ..."> buttons when URLs available -->
+	  </td>
+	</tr>
+
+	<tr onmouseout="SAFEGEN_stop()" onmouseover="SAFEGEN_start()">
+	  <td style="padding:20px;width:30%;vertical-align:middle">
+	    <div class="one">
+	      <div class="two" style="width:100%; height:100%; max-width:100%">
+	        <img id="SAFEGENImage" src='images/safegen-bench.png' style="width:100%; height:100%; max-width:100%; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);">
+	      </div>
+	    </div>
+	    <script type="text/javascript">
+	      function SAFEGEN_start() { document.getElementById('SAFEGENImage').style.opacity = "0"; }
+	      function SAFEGEN_stop() { document.getElementById('SAFEGENImage').style.opacity = "1"; }
+	      SAFEGEN_stop();
+	    </script>
+	  </td>
+	  <td style="padding:20px;width:70%;vertical-align:middle">
+	    <span style="color: #2A9D8F; font-weight: bold; font-size: 16px;">[T2V]</span>
+	    <span style="font-size: 16px;"><papertitle>SafeGen-Bench: Benchmarking Safety in Image-Conditioned Text-to-Video Generation</papertitle></span>
+
+	    <p style="margin:5px 0 5px 0px;font-size:15px">
+	      <strong>Yingzi Ma</strong>, Xiaogeng Liu, Yawen Zheng and Chaowei Xiao&dagger;
+	    </p>
+	    <p style="margin:5px 0 5px 0px;font-size: 16px;">Preprint, arXiv 2026.</p>
+	    <p></p>
+	    <!-- links: add <a class="btn ..."> buttons when URLs available -->
+	  </td>
+	</tr>
 
 	 <tr onmouseout="DOLPHIN_stop()" onmouseover="DOLPHIN_start()">
 	  <td style="padding:20px;width:30%;vertical-align:middle">
@@ -236,7 +447,7 @@
 	    <p style="margin:5px 0 5px 0px;font-size:15px">
 	      Zichen Zhu, Yang Xu, Lu Chen, Jingkai Yang, Yichuan Ma, Yiming Sun, Hailin Wen, Jiaqi Liu, Jinyu Cai, <strong>Yingzi Ma</strong>, Situo Zhang, Zihan Zhao, Liangtai Sun, and Kai Yu†
 	    </p>
-	    <p style="margin:5px 0 5px 0px;font-size: 16px;">Arxiv. 2024.</p>
+	    <p style="margin:5px 0 5px 0px;font-size: 16px;">Published on SCIS. 2024.</p>
 	    <p></p>
 	
 	    <div class="links">
@@ -506,8 +717,8 @@
 	      <h3 style="padding:0px;width:80%;vertical-align:middle">Sichuan University</h3>
               
               ♦ B.Eng. in Artificial Intelligence</br>
-              ♠ Sept. 2022 - Present</br>
-	      ♣ Advisor: <a href="https://sites.google.com/view/wenqianghome/home">Prof. Wenqiang Lei</a> </br>
+              ♠ Sept. 2020 - Jun. 2024</br>
+	      ♣ Advisor: <a href="https://merlintang.github.io/">Prof. Mingjie Tang</a> </br>
       
             </td>
           </tr>
