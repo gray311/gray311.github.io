@@ -1,4 +1,5 @@
-This is the source code to Anxing Xiao's public academic website: https://anxingxiao.com/. (A modified version of template from Jon Barron's public academic website: https://jonbarron.info/)
+This is the source code to Yingzi Ma's personal academic website.
 
+It is a modified version of [Anxing Xiao's](https://anxingxiao.com/) template, which is itself a modified version of [Jon Barron's](https://jonbarron.info/) academic website.
 
-Feel free to use this modified version and edit it as you wish, just add a link back to the original Jon Barron's website and here.
+Feel free to use and edit this template as you wish — please keep a link back to the original [Jon Barron's website](https://jonbarron.info/) and [Anxing Xiao's website](https://anxingxiao.com/).
