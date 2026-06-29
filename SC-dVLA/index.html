@@ -107,6 +107,7 @@
     <div class="eyebrow">Grounded Self-Correcting dVLA &middot; Denoising Pipeline</div>
     <h1>Watch the model <em>denoise &amp; correct</em> its own reasoning.</h1>
     <p class="lede">Drag the step slider to scrub the iterative denoising trajectory. The sequence is <b>fixed-length</b>: positions start as <b>[MASK]</b> or as <b>visible-but-wrong</b> rollout tokens, and across steps the model unmasks content and rewrites errors <b>token-for-token</b> &mdash; deleted content becomes <b>&lt;NULL&gt;</b> padding, never shortening the sequence.</p>
+    <p class="lede" style="margin-top:14px"><b>New &mdash; real model decode traces:</b> two live demonstrations captured from the trained model &mdash; (1) it <b>un-commits and rewrites a token it already wrote</b> mid-denoise (e.g. <code>Yes&rarr;No</code> on &ldquo;is it safe to overtake?&rdquo;), and (2) it <b>commits many tokens in parallel and self-corrects</b> for a <b>2&ndash;3&times;</b> decode speedup at the same answer. &nbsp;<a href="viz_decode.html" style="color:#2f8f3f;font-weight:700">Open the decode demo &rarr;</a></p>
     <div class="legend">
       <div class="chip"><span class="sw" style="background:var(--mask)"></span><b>[MASK]</b></div>
       <div class="chip"><span class="sw" style="background:rgba(216,58,48,.28)"></span><b>WRONG</b></div>
