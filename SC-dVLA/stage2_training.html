@@ -1,0 +1,1276 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SC-dVLA Stage 2 · Interactive Training Walkthrough</title>
+  <style>
+    :root {
+      --paper: #fff;
+      --page: #f4f4f2;
+      --ink: #171717;
+      --muted: #686868;
+      --faint: #929292;
+      --line: #d8d8d4;
+      --soft: #f0f0ed;
+      --blue: #246b8e;
+      --green: #2f7d45;
+      --red: #b73a32;
+      --amber: #9b6515;
+      --mask: #d1d1cd;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    button, input { font: inherit; }
+    button { color: inherit; }
+
+    .page {
+      width: min(1460px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 44px 0 70px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 28px;
+      align-items: end;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font: 700 12px/1.2 "Courier New", monospace;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 900px;
+      margin: 0;
+      font-size: clamp(36px, 5vw, 66px);
+      line-height: 1.02;
+      letter-spacing: -.035em;
+    }
+
+    .lede {
+      max-width: 800px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .status {
+      max-width: 260px;
+      padding-left: 20px;
+      border-left: 2px solid var(--line);
+      color: var(--muted);
+      font: 13px/1.55 "Courier New", monospace;
+    }
+
+    .status b { color: var(--ink); }
+
+    .scene-switch {
+      display: flex;
+      gap: 8px;
+      margin: 26px 0 16px;
+    }
+
+    .scene-switch button,
+    .step-button,
+    .control-button,
+    .candidate {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--paper);
+      cursor: pointer;
+      transition: border-color 140ms ease, background 140ms ease, color 140ms ease;
+    }
+
+    .scene-switch button {
+      padding: 9px 13px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .scene-switch button.active {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .stepper {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 7px;
+      margin-bottom: 12px;
+    }
+
+    .step-button {
+      min-height: 62px;
+      padding: 10px 8px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    .step-button .n {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--faint);
+      font: 700 10px/1 "Courier New", monospace;
+    }
+
+    .step-button .label {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .step-button.active {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .step-button.active .n { color: #bbb; }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(360px, .82fr) minmax(560px, 1.45fr);
+      min-height: 690px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    .input-column {
+      padding: 24px;
+      border-right: 1px solid var(--line);
+      background: #fafaf8;
+    }
+
+    .panel-column {
+      position: relative;
+      padding: 28px 32px 84px;
+      overflow: hidden;
+    }
+
+    .panel-column.entering .panel-body {
+      animation: enter 260ms ease both;
+    }
+
+    @keyframes enter {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-label {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font: 700 11px/1.2 "Courier New", monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .camera {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #ddd;
+      line-height: 0;
+    }
+
+    .camera img {
+      display: block;
+      width: 100%;
+      min-height: 230px;
+      object-fit: cover;
+    }
+
+    .focus-box {
+      position: absolute;
+      border: 3px solid var(--blue);
+      opacity: 0;
+      box-shadow: 0 0 0 999px rgba(255,255,255,.36);
+      transition: opacity 260ms ease;
+    }
+
+    .focus-box.visible { opacity: 1; }
+
+    .focus-tag {
+      position: absolute;
+      padding: 4px 7px;
+      background: var(--blue);
+      color: #fff;
+      font: 700 11px/1.2 "Courier New", monospace;
+      opacity: 0;
+      transition: opacity 260ms ease;
+    }
+
+    .focus-tag.visible { opacity: 1; }
+
+    .input-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 17px 0 21px;
+    }
+
+    .meta-item {
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .meta-item span {
+      display: block;
+      color: var(--faint);
+      font: 10px/1.2 "Courier New", monospace;
+      text-transform: uppercase;
+    }
+
+    .meta-item b {
+      display: block;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+
+    .reasoning-block {
+      margin-bottom: 21px;
+      padding: 15px 16px;
+      border-left: 3px solid var(--line);
+      background: var(--paper);
+      font: 14px/1.7 "Courier New", monospace;
+    }
+
+    .span {
+      padding: 2px 3px;
+      border-radius: 3px;
+      transition: background 200ms ease, color 200ms ease;
+    }
+
+    .span.harmful {
+      background: rgba(183,58,50,.13);
+      color: var(--red);
+      box-shadow: inset 0 -1px 0 rgba(183,58,50,.5);
+    }
+
+    .trajectory-chart {
+      width: 100%;
+      height: 185px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .trajectory-chart text {
+      fill: var(--faint);
+      font: 10px "Courier New", monospace;
+    }
+
+    .traj-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .traj-legend span::before {
+      content: "";
+      display: inline-block;
+      width: 17px;
+      height: 2px;
+      margin: 0 6px 3px 0;
+      background: currentColor;
+    }
+
+    .legend-gt { color: var(--ink); }
+    .legend-before { color: var(--red); }
+    .legend-after { color: var(--green); }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-head h2 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+    }
+
+    .panel-head .stage-id {
+      color: var(--faint);
+      font: 12px/1.4 "Courier New", monospace;
+      text-align: right;
+    }
+
+    .panel-body { padding-top: 24px; }
+
+    .intro {
+      max-width: 780px;
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .flow-item {
+      min-height: 110px;
+      padding: 14px;
+      border-top: 2px solid var(--line);
+    }
+
+    .flow-item b {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 14px;
+    }
+
+    .flow-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .formula {
+      overflow-x: auto;
+      margin: 20px 0;
+      padding: 16px 18px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: #fafaf8;
+      font: 700 15px/1.7 "Courier New", monospace;
+      white-space: nowrap;
+    }
+
+    .note {
+      margin: 18px 0 0;
+      padding-left: 14px;
+      border-left: 3px solid var(--amber);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .segments {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .segment {
+      padding: 13px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .segment.harmful { border-color: var(--red); }
+    .segment .sid {
+      color: var(--faint);
+      font: 700 10px/1 "Courier New", monospace;
+    }
+
+    .segment p {
+      margin: 8px 0 0;
+      font-size: 13px;
+    }
+
+    .interaction {
+      margin-top: 24px;
+    }
+
+    .interaction-row {
+      display: grid;
+      grid-template-columns: 42px repeat(10, 1fr);
+      gap: 4px;
+      align-items: end;
+      margin-bottom: 8px;
+    }
+
+    .interaction-row .row-label {
+      color: var(--muted);
+      font: 700 11px "Courier New", monospace;
+    }
+
+    .interaction-cell {
+      position: relative;
+      height: 34px;
+      background: var(--soft);
+    }
+
+    .interaction-cell::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: calc(var(--v) * 1%);
+      background: var(--blue);
+      transition: height 350ms ease;
+    }
+
+    .interaction-row.harmful .interaction-cell::after { background: var(--red); }
+
+    .horizon-labels {
+      display: grid;
+      grid-template-columns: 42px repeat(10, 1fr);
+      gap: 4px;
+      color: var(--faint);
+      font: 9px "Courier New", monospace;
+      text-align: center;
+    }
+
+    .candidate-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .candidate {
+      min-height: 126px;
+      padding: 14px;
+      text-align: left;
+    }
+
+    .candidate:hover,
+    .candidate.active { border-color: var(--ink); }
+
+    .candidate.active { box-shadow: inset 3px 0 0 var(--ink); }
+
+    .candidate .cid {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      color: var(--faint);
+      font: 700 10px "Courier New", monospace;
+    }
+
+    .candidate p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .candidate small {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font: 11px "Courier New", monospace;
+    }
+
+    .rollout-view {
+      min-height: 88px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      background: #fafaf8;
+      font: 14px/1.8 "Courier New", monospace;
+    }
+
+    .token {
+      display: inline-block;
+      min-width: 12px;
+      margin: 1px;
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    .token.mask {
+      color: transparent;
+      background: var(--mask);
+    }
+
+    .scrubber {
+      display: grid;
+      grid-template-columns: 120px 1fr 75px;
+      gap: 12px;
+      align-items: center;
+      margin-top: 11px;
+      color: var(--muted);
+      font: 11px "Courier New", monospace;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--ink);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 10px 9px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+    }
+
+    th {
+      color: var(--muted);
+      font: 700 10px "Courier New", monospace;
+      text-transform: uppercase;
+    }
+
+    th:first-child, td:first-child { text-align: left; }
+    .positive { color: var(--green); font-weight: 700; }
+    .negative { color: var(--red); font-weight: 700; }
+
+    .matrix-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: 92px 1fr 1fr;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .matrix div {
+      min-height: 52px;
+      display: grid;
+      place-items: center;
+      padding: 7px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .matrix .axis {
+      color: var(--muted);
+      background: #fafaf8;
+      font: 11px "Courier New", monospace;
+    }
+
+    .matrix .match { background: rgba(47,125,69,.09); }
+    .matrix .cross { background: rgba(183,58,50,.07); }
+
+    .update-map {
+      margin: 18px 0;
+      font: 13px/1.9 "Courier New", monospace;
+    }
+
+    .update-token {
+      display: inline-block;
+      margin: 2px;
+      padding: 3px 6px;
+      border: 1px solid var(--line);
+      background: #fafaf8;
+    }
+
+    .update-token.train {
+      border-color: var(--green);
+      background: rgba(47,125,69,.1);
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .update-token.clamp { color: var(--faint); }
+
+    .json-output {
+      overflow: auto;
+      max-height: 360px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: #fafaf8;
+      font: 13px/1.65 "Courier New", monospace;
+      white-space: pre-wrap;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .metric {
+      padding-top: 12px;
+      border-top: 2px solid var(--line);
+    }
+
+    .metric span {
+      display: block;
+      color: var(--faint);
+      font: 10px "Courier New", monospace;
+      text-transform: uppercase;
+    }
+
+    .metric b {
+      display: block;
+      margin-top: 5px;
+      font-size: 19px;
+    }
+
+    .controls {
+      position: absolute;
+      right: 32px;
+      bottom: 24px;
+      left: 32px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .control-group { display: flex; gap: 8px; }
+
+    .control-button {
+      min-width: 80px;
+      padding: 8px 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .control-button.primary {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .control-button:disabled { opacity: .35; cursor: default; }
+
+    footer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      padding: 26px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer p { margin: 0; }
+    footer a { color: var(--ink); }
+
+    @media (max-width: 980px) {
+      header { grid-template-columns: 1fr; }
+      .status { max-width: none; }
+      .stepper { grid-template-columns: repeat(4, 1fr); }
+      .workspace { grid-template-columns: 1fr; }
+      .input-column { border-right: 0; border-bottom: 1px solid var(--line); }
+      .flow, .segments, .metrics { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .page { width: min(100% - 20px, 1460px); padding-top: 24px; }
+      .stepper { grid-template-columns: 1fr 1fr; }
+      .panel-column { padding: 22px 18px 96px; }
+      .input-column { padding: 18px; }
+      .candidate-grid, .matrix-wrap, .flow, .segments, .metrics, footer { grid-template-columns: 1fr; }
+      .interaction-row, .horizon-labels { grid-template-columns: 34px repeat(10, 1fr); gap: 2px; }
+      .scrubber { grid-template-columns: 90px 1fr 58px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div>
+        <p class="eyebrow">SC-dVLA · Project Stage 2</p>
+        <h1>From local intervention to a LoRA policy update.</h1>
+        <p class="lede">An interactive training example showing the exact data flow: scene input,
+          Stage-1 reasoning, span localization, localized diffusion rollouts, correction reward,
+          leave-one-out advantage, and the reverse transitions that receive gradient.</p>
+      </div>
+      <div class="status"><b>Schematic walkthrough</b><br>Camera frames come from the existing
+        SC-dVLA demo. Reward values and rollout traces are illustrative—not measured results.</div>
+    </header>
+
+    <div class="scene-switch" aria-label="Select example scene">
+      <button type="button" data-scene="truck" class="active">Example A · truck ahead</button>
+      <button type="button" data-scene="smoke">Example B · smoke hazard</button>
+    </div>
+
+    <nav class="stepper" aria-label="Training pipeline stages"></nav>
+
+    <main class="workspace">
+      <aside class="input-column">
+        <p class="section-label">Persistent scene input</p>
+        <div class="camera">
+          <img id="cameraImage" alt="Front camera frame">
+          <div id="focusBox" class="focus-box"></div>
+          <div id="focusTag" class="focus-tag"></div>
+        </div>
+
+        <div class="input-meta">
+          <div class="meta-item"><span>Navigation</span><b id="navValue"></b></div>
+          <div class="meta-item"><span>Ego state</span><b id="egoValue"></b></div>
+        </div>
+
+        <p class="section-label">Stage-1 output · before correction</p>
+        <div id="baseReasoning" class="reasoning-block"></div>
+
+        <p class="section-label">Trajectory view · ego frame</p>
+        <svg id="trajectoryChart" class="trajectory-chart" viewBox="0 0 420 185" role="img" aria-label="Ground truth, initial, and corrected trajectories">
+          <g id="gridLayer"></g>
+          <path id="gtPath" fill="none" stroke="#171717" stroke-width="2.2"></path>
+          <path id="beforePath" fill="none" stroke="#b73a32" stroke-width="2.2" stroke-dasharray="5 4"></path>
+          <path id="afterPath" fill="none" stroke="#2f7d45" stroke-width="2.6"></path>
+          <circle cx="210" cy="170" r="4" fill="#171717"></circle>
+          <text x="218" y="174">ego</text>
+        </svg>
+        <div class="traj-legend">
+          <span class="legend-gt">GT τ*</span>
+          <span class="legend-before">Stage-1 τ</span>
+          <span id="afterLegend" class="legend-after">corrected τ′</span>
+        </div>
+      </aside>
+
+      <section id="panelColumn" class="panel-column">
+        <div class="panel-head">
+          <h2 id="panelTitle"></h2>
+          <div id="stageId" class="stage-id"></div>
+        </div>
+        <div id="panelBody" class="panel-body"></div>
+
+        <div class="controls">
+          <div class="control-group">
+            <button id="prevButton" type="button" class="control-button">← Previous</button>
+            <button id="nextButton" type="button" class="control-button">Next →</button>
+          </div>
+          <button id="playButton" type="button" class="control-button primary">▶ Play pipeline</button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p><strong>Training contract.</strong> The scaffold, unaffected reasoning, and unaffected
+        waypoints remain clamped. Only sampled local reverse transitions enter the Stage-2 policy
+        ratio, although they update the same shared LoRA parameters.</p>
+      <p><strong>Camera provenance.</strong> Frames are reused from the public
+        <a href="https://github.com/gray311/gray311.github.io/tree/master/SC-dVLA">SC-dVLA GitHub Pages demo</a>.
+        This page has no external JavaScript or font dependency.</p>
+    </footer>
+  </div>
+
+  <script>
+    (() => {
+      const STEPS = [
+        ['Input', 'scene + Stage-1 output'],
+        ['Localize', 'span ↔ waypoint'],
+        ['Rollout', 'K local corrections'],
+        ['Reward', 'alignment − locality'],
+        ['Advantage', 'leave-one-out'],
+        ['Update', 'localized DLM-GRPO'],
+        ['Output', 'corrected JSON']
+      ];
+
+      const SCENES = {
+        truck: {
+          camera: 'assets/stage2_camera_truck.jpg',
+          nav: 'go straight',
+          ego: '8.2 m/s · stable',
+          focus: { left: 53, top: 33, width: 15, height: 31, label: 'lead truck' },
+          spans: [
+            'A large vehicle is ahead in the ego lane.',
+            'The road remains clear enough to maintain speed.',
+            'Continue straight and monitor the lead vehicle.'
+          ],
+          counterfactual: 'The truck ahead reduces the available stopping margin, so the ego should slow smoothly.',
+          gt: [4.0, 7.8, 11.3, 14.5, 17.3, 19.7, 21.7, 23.3, 24.5, 25.3],
+          before: [4.1, 8.3, 12.4, 16.5, 20.6, 24.7, 28.8, 32.9, 37.0, 41.1],
+          interaction: [
+            [16, 22, 29, 34, 38, 39, 38, 35, 31, 26],
+            [9, 18, 48, 65, 77, 88, 93, 91, 87, 82],
+            [7, 10, 15, 19, 21, 22, 20, 18, 15, 12]
+          ],
+          affectedStart: 2,
+          candidates: [
+            {
+              reasoning: 'The truck ahead reduces stopping margin; slow smoothly while remaining in lane.',
+              trajectory: [4.0, 7.8, 11.4, 14.6, 17.4, 19.8, 21.8, 23.4, 24.6, 25.4],
+              after: 1.46, locality: 0.04, label: 'smooth slow-down'
+            },
+            {
+              reasoning: 'A lead vehicle is present; proceed cautiously and keep a larger following gap.',
+              trajectory: [4.0, 7.9, 11.6, 15.0, 18.1, 20.9, 23.4, 25.6, 27.5, 29.1],
+              after: 1.08, locality: 0.02, label: 'increase gap'
+            },
+            {
+              reasoning: 'The lane is clear; maintain the current speed.',
+              trajectory: [4.1, 8.3, 12.4, 16.5, 20.6, 24.7, 28.8, 32.9, 37.0, 41.1],
+              after: -0.54, locality: 0.01, label: 'keeps harmful behavior'
+            },
+            {
+              reasoning: 'Brake hard immediately because the truck blocks the entire lane.',
+              trajectory: [3.7, 6.8, 9.1, 10.5, 11.0, 11.1, 11.1, 11.1, 11.1, 11.1],
+              after: 0.63, locality: 0.18, label: 'over-correction'
+            }
+          ],
+          beforeAlign: 0.21,
+          matrix: [[1.34, -0.42], [-0.31, 1.16]],
+          corrected: 'The truck ahead reduces stopping margin; slow smoothly while remaining in lane.'
+        },
+        smoke: {
+          camera: 'assets/stage2_camera_smoke.jpg',
+          nav: 'continue forward',
+          ego: '10.0 m/s · stable',
+          focus: { left: 42, top: 14, width: 26, height: 55, label: 'smoke hazard' },
+          spans: [
+            'A plume is visible over the roadway ahead.',
+            'The lane appears safe to enter at the current speed.',
+            'Continue forward without changing the plan.'
+          ],
+          counterfactual: 'The smoke obscures the roadway and may hide a stopped vehicle, so the ego should decelerate and prepare to stop.',
+          gt: [4.7, 8.9, 12.5, 15.4, 17.7, 19.4, 20.6, 21.3, 21.7, 21.9],
+          before: [5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0],
+          interaction: [
+            [25, 33, 39, 44, 47, 47, 45, 42, 36, 30],
+            [12, 24, 52, 69, 82, 91, 95, 94, 90, 86],
+            [8, 13, 18, 25, 28, 29, 27, 23, 19, 15]
+          ],
+          affectedStart: 2,
+          candidates: [
+            {
+              reasoning: 'Smoke obscures the road ahead; decelerate and prepare to stop before entering it.',
+              trajectory: [4.7, 8.9, 12.5, 15.5, 17.8, 19.5, 20.7, 21.4, 21.8, 22.0],
+              after: 1.58, locality: 0.03, label: 'prepare to stop'
+            },
+            {
+              reasoning: 'Visibility is reduced ahead; slow down and preserve a safe stopping margin.',
+              trajectory: [4.8, 9.1, 12.9, 16.2, 19.0, 21.3, 23.1, 24.4, 25.2, 25.7],
+              after: 1.11, locality: 0.04, label: 'visibility-aware slowing'
+            },
+            {
+              reasoning: 'The smoke is distant and the lane is clear, so maintain speed.',
+              trajectory: [5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0],
+              after: -0.61, locality: 0.01, label: 'ignores hazard'
+            },
+            {
+              reasoning: 'Stop immediately in the current lane because any smoke means the road is blocked.',
+              trajectory: [4.0, 7.0, 8.8, 9.5, 9.7, 9.7, 9.7, 9.7, 9.7, 9.7],
+              after: 0.52, locality: 0.22, label: 'over-correction'
+            }
+          ],
+          beforeAlign: 0.18,
+          matrix: [[1.41, -0.48], [-0.37, 1.22]],
+          corrected: 'Smoke obscures the road ahead; decelerate and prepare to stop before entering it.'
+        }
+      };
+
+      const state = {
+        scene: 'truck',
+        step: 0,
+        candidate: 0,
+        rolloutStep: 0,
+        playing: false,
+        timer: null
+      };
+
+      const stepper = document.querySelector('.stepper');
+      const panelColumn = document.getElementById('panelColumn');
+      const panelTitle = document.getElementById('panelTitle');
+      const stageId = document.getElementById('stageId');
+      const panelBody = document.getElementById('panelBody');
+      const cameraImage = document.getElementById('cameraImage');
+      const focusBox = document.getElementById('focusBox');
+      const focusTag = document.getElementById('focusTag');
+      const navValue = document.getElementById('navValue');
+      const egoValue = document.getElementById('egoValue');
+      const baseReasoning = document.getElementById('baseReasoning');
+      const prevButton = document.getElementById('prevButton');
+      const nextButton = document.getElementById('nextButton');
+      const playButton = document.getElementById('playButton');
+      const gtPath = document.getElementById('gtPath');
+      const beforePath = document.getElementById('beforePath');
+      const afterPath = document.getElementById('afterPath');
+      const afterLegend = document.getElementById('afterLegend');
+
+      function esc(text) {
+        return String(text).replace(/[&<>"']/g, ch => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        })[ch]);
+      }
+
+      function rewards(scene) {
+        return scene.candidates.map(c => c.after - scene.beforeAlign - c.locality);
+      }
+
+      function advantages(values) {
+        const mean = values.reduce((a, b) => a + b, 0) / values.length;
+        const variance = values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length;
+        const std = Math.sqrt(variance) + 1e-8;
+        return values.map((value, i) => {
+          const others = values.filter((_, j) => j !== i);
+          const baseline = others.reduce((a, b) => a + b, 0) / others.length;
+          return { baseline, advantage: (value - baseline) / std };
+        });
+      }
+
+      function makePath(values) {
+        const maxForward = 52;
+        const points = [[210, 170]];
+        values.forEach((forward, i) => {
+          const lateral = Math.sin(i / 3) * .12;
+          const x = 210 + lateral * 24;
+          const y = 170 - (forward / maxForward) * 148;
+          points.push([x, y]);
+        });
+        return points.map((p, i) => `${i ? 'L' : 'M'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
+      }
+
+      function buildGrid() {
+        const layer = document.getElementById('gridLayer');
+        let html = '';
+        for (let i = 0; i <= 5; i++) {
+          const y = 170 - i * 29.6;
+          html += `<line x1="115" y1="${y}" x2="305" y2="${y}" stroke="#e5e5e1" stroke-width="1"/>`;
+          html += `<text x="82" y="${y + 3}">${i * 10}m</text>`;
+        }
+        html += '<line x1="210" y1="18" x2="210" y2="174" stroke="#d8d8d4" stroke-width="1"/>';
+        layer.innerHTML = html;
+      }
+
+      function renderPersistent() {
+        const scene = SCENES[state.scene];
+        cameraImage.src = scene.camera;
+        navValue.textContent = scene.nav;
+        egoValue.textContent = scene.ego;
+        focusBox.style.left = `${scene.focus.left}%`;
+        focusBox.style.top = `${scene.focus.top}%`;
+        focusBox.style.width = `${scene.focus.width}%`;
+        focusBox.style.height = `${scene.focus.height}%`;
+        focusTag.style.left = `${scene.focus.left}%`;
+        focusTag.style.top = `${Math.max(2, scene.focus.top - 8)}%`;
+        focusTag.textContent = scene.focus.label;
+        const showFocus = state.step >= 1;
+        focusBox.classList.toggle('visible', showFocus);
+        focusTag.classList.toggle('visible', showFocus);
+        baseReasoning.innerHTML = scene.spans.map((span, i) =>
+          `<span class="span ${state.step >= 1 && i === 1 ? 'harmful' : ''}">s${i + 1}: ${esc(span)}</span>${i < 2 ? '<br>' : ''}`
+        ).join('');
+        gtPath.setAttribute('d', makePath(scene.gt));
+        beforePath.setAttribute('d', makePath(scene.before));
+        if (state.step >= 6) {
+          afterPath.setAttribute('d', makePath(scene.candidates[0].trajectory));
+          afterPath.style.opacity = '1';
+          afterLegend.style.opacity = '1';
+        } else {
+          afterPath.style.opacity = '0';
+          afterLegend.style.opacity = '.28';
+        }
+      }
+
+      function renderInput(scene) {
+        return `
+          <p class="intro">Stage 2 does not start from a reasoning label. It starts from a frozen
+          Stage-1 snapshot and one stochastic joint output. The scene remains the grounding context;
+          the demonstrated trajectory is available only as training supervision.</p>
+          <div class="flow">
+            <div class="flow-item"><b>Scene x</b><p>front camera · ego history · navigation command</p></div>
+            <div class="flow-item"><b>Stage-1 rollout</b><p>free-form reasoning r + textual trajectory τ + 48-step path ξ</p></div>
+            <div class="flow-item"><b>Training target</b><p>GT trajectory τ*; no target rationale</p></div>
+          </div>
+          <div class="formula">(r, τ, ξ) ~ p<sub>θ_old</sub>(r, τ, ξ | x)</div>
+          <p class="note"><strong>Persistent context.</strong> The camera, ego state, prompt, fixed
+          JSON scaffold, and Stage-1 output shown on the left are held constant through the walkthrough.</p>`;
+      }
+
+      function renderLocalize(scene) {
+        const segments = scene.spans.map((span, i) => `
+          <div class="segment ${i === 1 ? 'harmful' : ''}">
+            <span class="sid">s${i + 1}${i === 1 ? ' · selected' : ''}</span>
+            <p>${esc(span)}</p>
+          </div>`).join('');
+        const rows = scene.interaction.map((values, i) => `
+          <div class="interaction-row ${i === 1 ? 'harmful' : ''}">
+            <span class="row-label">s${i + 1}</span>
+            ${values.map(v => `<span class="interaction-cell" style="--v:${v}"></span>`).join('')}
+          </div>`).join('');
+        const labels = Array.from({length: 10}, (_, i) => `<span>${(i + 1) * .5}s</span>`).join('');
+        return `
+          <p class="intro">Split the free-form rationale into clauses. For each clause, infill one
+          fluent local counterfactual and pair it with a validated trajectory counterfactual.</p>
+          <div class="segments">${segments}</div>
+          <div class="formula">C<sub>j,h</sub> = S<sub>h</sub>(r,τ) + S<sub>h</sub>(r<sub>j</sub>⁻,τ<sub>j</sub>⁻) − S<sub>h</sub>(r,τ<sub>j</sub>⁻) − S<sub>h</sub>(r<sub>j</sub>⁻,τ)</div>
+          <div class="interaction">
+            <p class="section-label">|Cj,h| · span-to-waypoint interaction</p>
+            ${rows}
+            <div class="horizon-labels"><span></span>${labels}</div>
+          </div>
+          <p class="note"><strong>Selected intervention.</strong> Replace s2 with: “${esc(scene.counterfactual)}”
+          and mark waypoints from ${(scene.affectedStart + 1) * .5}s to 5.0s as the affected set D₂.</p>`;
+      }
+
+      function rolloutTokens(text, step) {
+        const words = text.split(/\s+/);
+        const reveal = Math.floor(words.length * step / 48);
+        return words.map((word, i) => i < reveal
+          ? `<span class="token">${esc(word)}</span>`
+          : '<span class="token mask">mask</span>').join(' ');
+      }
+
+      function renderRollout(scene) {
+        const cards = scene.candidates.map((c, i) => `
+          <button type="button" class="candidate ${i === state.candidate ? 'active' : ''}" data-candidate="${i}">
+            <span class="cid"><span>k=${i + 1}</span><span>${esc(c.label)}</span></span>
+            <p>${esc(c.reasoning)}</p>
+            <small>localized reasoning + affected waypoints only</small>
+          </button>`).join('');
+        const selected = scene.candidates[state.candidate];
+        return `
+          <p class="intro">Clamp s1, s3, unaffected waypoints, and every scaffold token. Mask only
+          the harmful clause s2 and D₂, then sample K = 4 stochastic localized correction paths.</p>
+          <div class="candidate-grid">${cards}</div>
+          <p class="section-label">Selected candidate · reverse diffusion trace</p>
+          <div id="rolloutView" class="rollout-view">${rolloutTokens(selected.reasoning, state.rolloutStep)}</div>
+          <div class="scrubber">
+            <span>noisy local canvas</span>
+            <input id="rolloutSlider" type="range" min="0" max="48" value="${state.rolloutStep}" step="1">
+            <span>step <b id="rolloutStepValue">${state.rolloutStep}</b>/48</span>
+          </div>
+          <p class="note"><strong>What is saved.</strong> Every sampled token, updated position,
+          reverse state, and old-policy log-probability for the local correction path ξ<sup>local</sup><sub>k</sub>.</p>`;
+      }
+
+      function renderReward(scene) {
+        const rs = rewards(scene);
+        const rows = scene.candidates.map((c, i) => `
+          <tr><td>k=${i + 1} · ${esc(c.label)}</td><td>${scene.beforeAlign.toFixed(2)}</td>
+          <td>${c.after.toFixed(2)}</td><td>${c.locality.toFixed(2)}</td>
+          <td class="${rs[i] >= 0 ? 'positive' : 'negative'}">${rs[i].toFixed(2)}</td></tr>`).join('');
+        const m = scene.matrix;
+        return `
+          <p class="intro">Score each localized candidate with the frozen old-policy evaluator.
+          Alignment improves when matched reasoning/trajectory pairs beat both cross-pairings.</p>
+          <div class="matrix-wrap">
+            <div>
+              <p class="section-label">Illustrative 2 × 2 compatibility bank</p>
+              <div class="matrix">
+                <div class="axis"></div><div class="axis">τ factual</div><div class="axis">τ⁻ counterfactual</div>
+                <div class="axis">r factual</div><div class="match">S++ = ${m[0][0].toFixed(2)}</div><div class="cross">S+− = ${m[0][1].toFixed(2)}</div>
+                <div class="axis">r⁻ counterfactual</div><div class="cross">S−+ = ${m[1][0].toFixed(2)}</div><div class="match">S−− = ${m[1][1].toFixed(2)}</div>
+              </div>
+            </div>
+            <div>
+              <p class="section-label">Localized correction reward</p>
+              <div class="formula">R<sub>corr,k</sub> = R<sub>align</sub>(r′<sub>k</sub>,τ′<sub>k</sub>) − R<sub>align</sub>(r,τ) − λ<sub>loc</sub>D<sub>unaffected,k</sub></div>
+              <p class="note">λ<sub>loc</sub> = 1.0 here. Reward values are detached; gradients do not
+              backpropagate through the compatibility scorer.</p>
+            </div>
+          </div>
+          <table>
+            <thead><tr><th>candidate</th><th>before</th><th>after</th><th>locality</th><th>Rcorr</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>`;
+      }
+
+      function renderAdvantage(scene) {
+        const rs = rewards(scene);
+        const adv = advantages(rs);
+        const rows = scene.candidates.map((c, i) => `
+          <tr><td>k=${i + 1} · ${esc(c.label)}</td><td>${rs[i].toFixed(2)}</td>
+          <td>${adv[i].baseline.toFixed(2)}</td>
+          <td class="${adv[i].advantage >= 0 ? 'positive' : 'negative'}">${adv[i].advantage >= 0 ? '+' : ''}${adv[i].advantage.toFixed(2)}</td>
+          <td>${adv[i].advantage > .15 ? 'reinforce' : adv[i].advantage < -.15 ? 'suppress' : 'near-neutral'}</td></tr>`).join('');
+        return `
+          <p class="intro">Compare candidates only within the same scene. This removes much of the
+          scene difficulty and trajectory-scale variation from the policy signal.</p>
+          <div class="formula">b<sub>k</sub> = mean<sub>ℓ≠k</sub> R<sub>corr,ℓ</sub>&nbsp;&nbsp;&nbsp; A<sub>k</sub> = (R<sub>corr,k</sub> − b<sub>k</sub>) / (std(R<sub>1:K</sub>) + ε)</div>
+          <table>
+            <thead><tr><th>candidate</th><th>Rcorr</th><th>LOO baseline</th><th>advantage</th><th>effect</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+          <p class="note"><strong>No learned value model.</strong> The other K−1 localized rollouts
+          provide the baseline. Advantages are normalized and detached before the policy update.</p>`;
+      }
+
+      function renderUpdate(scene) {
+        const correctedWords = scene.candidates[0].reasoning.split(/\s+/);
+        const localWords = correctedWords.map(w => `<span class="update-token train">${esc(w)}</span>`).join(' ');
+        const affected = Array.from({length: 10}, (_, i) =>
+          `<span class="update-token ${i >= scene.affectedStart ? 'train' : 'clamp'}">${(i + 1) * .5}s</span>`).join(' ');
+        return `
+          <p class="intro">Re-evaluate the saved local reverse path under the current LoRA policy.
+          The probability ratio includes only transitions that changed the selected reasoning span
+          or its affected waypoint set.</p>
+          <div class="formula">log π<sub>θ</sub>(ξ<sup>local</sup><sub>k</sub>|x) = Σ<sub>s=1</sub><sup>48</sup> Σ<sub>p∈Mlocal∩Uks</sub> log p<sub>θ</sub>(z<sub>s−1,p</sub>|z<sub>s</sub>,x)</div>
+          <div class="formula">L<sub>policy</sub> = −E[min(ρ<sub>k</sub>A<sub>k</sub>, clip(ρ<sub>k</sub>,1−ε,1+ε)A<sub>k</sub>)] + β KL</div>
+          <p class="section-label">Reasoning token mask</p>
+          <div class="update-map">
+            <span class="update-token clamp">s1 · clamped</span>
+            ${localWords}
+            <span class="update-token clamp">s3 · clamped</span>
+          </div>
+          <p class="section-label">Waypoint token mask</p>
+          <div class="update-map">${affected}</div>
+          <p class="note"><strong>Shared-parameter update.</strong> Only the highlighted local
+          transitions contribute policy loss, but their gradient updates the same shared LoRA
+          parameters used for all reasoning and trajectory positions.</p>`;
+      }
+
+      function renderOutput(scene) {
+        const best = scene.candidates[0];
+        const waypoints = best.trajectory.map((v, i) =>
+          `    "${((i + 1) * .5).toFixed(1)}s: forward=+${v.toFixed(1).padStart(5, '0')}m, lateral=+000.0m"`
+        ).join(',\n');
+        const output = `{
+  "reasoning": "${scene.corrected}<END_REASONING>",
+  "trajectory": [
+${waypoints}
+  ]
+}`;
+        const rs = rewards(scene);
+        const adv = advantages(rs);
+        return `
+          <p class="intro">The external output contract is unchanged. Stage 2 changes only the
+          harmful reasoning span and the predicted descendant waypoints; the rest of the sequence
+          remains byte-for-byte clamped.</p>
+          <pre class="json-output">${esc(output)}</pre>
+          <div class="metrics">
+            <div class="metric"><span>selected candidate</span><b>k=1</b></div>
+            <div class="metric"><span>Rcorr</span><b class="positive">+${rs[0].toFixed(2)}</b></div>
+            <div class="metric"><span>advantage</span><b class="positive">+${adv[0].advantage.toFixed(2)}</b></div>
+            <div class="metric"><span>unaffected edits</span><b>${best.locality.toFixed(2)}</b></div>
+          </div>
+          <p class="note"><strong>Training success is not this single example.</strong> The study
+          must show harmful-span accuracy, waypoint localization precision/recall, actual ADE/FDE
+          gain, preservation of unaffected content, and lower cost than full regeneration.</p>`;
+      }
+
+      function renderPanel() {
+        const scene = SCENES[state.scene];
+        panelTitle.textContent = STEPS[state.step][0];
+        stageId.innerHTML = `stage ${String(state.step + 1).padStart(2, '0')} / ${String(STEPS.length).padStart(2, '0')}<br>${STEPS[state.step][1]}`;
+        const renderers = [renderInput, renderLocalize, renderRollout, renderReward, renderAdvantage, renderUpdate, renderOutput];
+        panelBody.innerHTML = renderers[state.step](scene);
+        panelColumn.classList.remove('entering');
+        requestAnimationFrame(() => panelColumn.classList.add('entering'));
+        bindDynamicControls();
+      }
+
+      function renderStepper() {
+        stepper.innerHTML = STEPS.map((step, i) => `
+          <button type="button" class="step-button ${i === state.step ? 'active' : ''}" data-step="${i}">
+            <span class="n">0${i + 1}</span><span class="label">${step[0]}</span>
+          </button>`).join('');
+        stepper.querySelectorAll('[data-step]').forEach(button => {
+          button.addEventListener('click', () => setStep(Number(button.dataset.step)));
+        });
+      }
+
+      function bindDynamicControls() {
+        panelBody.querySelectorAll('[data-candidate]').forEach(button => {
+          button.addEventListener('click', () => {
+            state.candidate = Number(button.dataset.candidate);
+            state.rolloutStep = 48;
+            renderPanel();
+          });
+        });
+        const slider = document.getElementById('rolloutSlider');
+        if (slider) {
+          slider.addEventListener('input', () => {
+            state.rolloutStep = Number(slider.value);
+            document.getElementById('rolloutStepValue').textContent = state.rolloutStep;
+            document.getElementById('rolloutView').innerHTML = rolloutTokens(
+              SCENES[state.scene].candidates[state.candidate].reasoning,
+              state.rolloutStep
+            );
+          });
+        }
+      }
+
+      function setStep(step) {
+        state.step = Math.max(0, Math.min(STEPS.length - 1, step));
+        if (state.step !== 2) state.rolloutStep = 0;
+        renderAll();
+      }
+
+      function stopPlayback() {
+        if (state.timer) window.clearInterval(state.timer);
+        state.timer = null;
+        state.playing = false;
+        playButton.textContent = '▶ Play pipeline';
+      }
+
+      function playPipeline() {
+        if (state.playing) {
+          stopPlayback();
+          return;
+        }
+        state.playing = true;
+        playButton.textContent = '■ Stop';
+        if (state.step === STEPS.length - 1) setStep(0);
+        state.timer = window.setInterval(() => {
+          if (state.step === 2 && state.rolloutStep < 48) {
+            state.rolloutStep = Math.min(48, state.rolloutStep + 12);
+            renderPanel();
+            return;
+          }
+          if (state.step >= STEPS.length - 1) {
+            stopPlayback();
+            return;
+          }
+          setStep(state.step + 1);
+        }, 1700);
+      }
+
+      function renderAll() {
+        renderStepper();
+        renderPersistent();
+        renderPanel();
+        prevButton.disabled = state.step === 0;
+        nextButton.disabled = state.step === STEPS.length - 1;
+      }
+
+      document.querySelectorAll('[data-scene]').forEach(button => {
+        button.addEventListener('click', () => {
+          stopPlayback();
+          state.scene = button.dataset.scene;
+          state.step = 0;
+          state.candidate = 0;
+          state.rolloutStep = 0;
+          document.querySelectorAll('[data-scene]').forEach(b => b.classList.toggle('active', b === button));
+          renderAll();
+        });
+      });
+
+      prevButton.addEventListener('click', () => setStep(state.step - 1));
+      nextButton.addEventListener('click', () => setStep(state.step + 1));
+      playButton.addEventListener('click', playPipeline);
+      window.addEventListener('keydown', event => {
+        if (event.key === 'ArrowRight') setStep(state.step + 1);
+        if (event.key === 'ArrowLeft') setStep(state.step - 1);
+        if (event.key === ' ') {
+          event.preventDefault();
+          playPipeline();
+        }
+      });
+
+      buildGrid();
+      renderAll();
+    })();
+  </script>
+</body>
+</html>
