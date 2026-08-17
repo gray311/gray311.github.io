@@ -9,8 +9,14 @@
       "data_path": "cp20-final.json"
     },
     {
+      "id": "ac2-historical-evolution",
+      "label": "AC2 · 24-round historical evolve curve",
+      "task": "eft__math__second_autocorr_ineq",
+      "data_path": "ac2-historical-evolution.json"
+    },
+    {
       "id": "ac2-round1-audit",
-      "label": "AC2 · eight-harness attribution audit",
+      "label": "AC2 · round-1 artifact audit (8 candidates)",
       "task": "eft__math__second_autocorr_ineq",
       "data_path": "ac2-round1-audit.json"
     }

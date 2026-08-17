@@ -373,6 +373,14 @@ img { display: block; max-width: 100%; }
 .round-metric strong { display: block; overflow: hidden; margin-top: 7px; color: white; font-family: var(--mono); font-size: 16px; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
 .round-metric small { display: block; margin-top: 2px; color: #6f7b90; font-size: 9px; }
 
+.curve-only-panel { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 15px; margin: 0 24px 28px; padding: 18px 20px; border: 1px solid rgba(127,154,255,.28); border-radius: 9px; background: rgba(127,154,255,.06); }
+.curve-only-panel[hidden] { display: none; }
+.curve-only-mark { display: grid; width: 32px; height: 32px; place-items: center; border: 1px solid rgba(127,154,255,.34); border-radius: 50%; color: #aabaff; font-family: var(--mono); }
+.curve-only-panel h3 { margin: 1px 0 6px; color: #edf1fa; font-family: var(--display); font-size: 17px; }
+.curve-only-panel p { max-width: 850px; margin: 0; color: #8f9aae; font-size: 11px; line-height: 1.6; }
+.curve-audit-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 12px; color: #9db0f4; font-family: var(--mono); font-size: 9px; letter-spacing: .02em; text-transform: uppercase; }
+.curve-audit-link:hover { color: #d3dcff; }
+
 .candidate-section { padding: 0 24px 28px; }
 .candidate-legend { display: flex; flex-wrap: wrap; justify-content: end; gap: 12px; color: #7f8a9d; font-size: 9px; }
 .candidate-legend span { display: inline-flex; align-items: center; gap: 5px; }
@@ -612,7 +620,8 @@ footer { padding: 50px 0; border-top: 1px solid var(--line); background: #eae7de
   .example-file-view pre { height: 360px; padding: 15px 14px; }
   .explorer { margin-inline: -7px; border-radius: 10px; }
   .curve-panel, .round-header, .inspector-head { padding-inline: 14px; }
-  .round-metrics, .candidate-section { margin-inline: 14px; padding-inline: 0; }
+  .round-metrics, .candidate-section, .curve-only-panel { margin-inline: 14px; padding-inline: 0; }
+  .curve-only-panel { padding: 16px; }
   .round-metrics { grid-template-columns: 1fr 1fr; }
   .candidate-grid { grid-template-columns: 1fr; }
   .candidate-meta, .stage-tabs { padding-inline: 14px; }

@@ -159,8 +159,8 @@
       "category": "functional inequality",
       "thesis": "Inspect step parameters, refine gradients, and protect the formal-evaluation budget.",
       "detail": "This package combines a step analyzer, gradient-refinement protocol, and probe-budget guard.",
-      "replay": "?campaign=ac2-round1-audit&round=1&candidate=3#evolution",
-      "replay_label": "Replay the 8 proposals",
+      "replay": "?campaign=ac2-historical-evolution&round=0#evolution",
+      "replay_label": "Replay 24 evolve rounds",
       "components": {
         "tools": [
           "analyze_step_parameters"

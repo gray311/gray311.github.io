@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700&amp;family=Roboto+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="static/css/style.css" />
+  <link rel="stylesheet" href="static/css/style.css?v=20260816-ac2curve" />
 </head>
 <body>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
@@ -192,7 +192,7 @@
         <div class="section-heading section-heading-light reveal">
           <span class="eyebrow">Evidence explorer</span>
           <h2>Replay the evolve process, one decision at a time.</h2>
-          <p>Select a curve point, inspect all eight sibling harnesses, then open the exact proposer, executor, control, reward, and training artifacts.</p>
+          <p>Replay a full evolution curve or open an artifact-complete audit round. Artifact availability and provenance are shown explicitly for every campaign.</p>
         </div>
 
         <div class="explorer" id="explorer" aria-busy="true">
@@ -233,7 +233,7 @@
                 <div class="chart-tooltip" id="chartTooltip" role="status"></div>
               </div>
               <div class="round-scrubber" id="roundScrubber">
-                <span>Round 1</span>
+                <span id="roundSliderStart">Round 1</span>
                 <input id="roundSlider" type="range" min="0" max="19" value="4" step="1" aria-label="Select evolution round" />
                 <span id="roundSliderEnd">Round 20</span>
               </div>
@@ -250,7 +250,17 @@
 
             <div class="round-metrics" id="roundMetrics"></div>
 
-            <div class="candidate-section">
+            <div class="curve-only-panel" id="curveOnlyPanel" hidden>
+              <span class="curve-only-mark">↗</span>
+              <div>
+                <span class="mono-label">ARTIFACT AVAILABILITY</span>
+                <h3 id="curveOnlyTitle">Historical curve ledger</h3>
+                <p id="curveOnlyText"></p>
+                <a class="curve-audit-link" id="curveAuditLink" href="#evolution">Open the artifact-complete AC2 audit <span>&rarr;</span></a>
+              </div>
+            </div>
+
+            <div class="candidate-section" id="candidateSection">
               <div class="candidate-heading">
                 <div>
                   <span class="mono-label" id="candidateGroupLabel">RLOO GROUP · K = 8</span>
@@ -420,6 +430,6 @@
   </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="static/js/app.js"></script>
+  <script src="static/js/app.js?v=20260816-ac2curve"></script>
 </body>
 </html>

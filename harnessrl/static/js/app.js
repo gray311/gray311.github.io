@@ -25,12 +25,18 @@
     curveLegend: $("#curveLegend"),
     slider: $("#roundSlider"),
     roundScrubber: $("#roundScrubber"),
+    sliderStart: $("#roundSliderStart"),
     sliderEnd: $("#roundSliderEnd"),
     eventNote: $("#eventNote"),
     roundName: $("#roundName"),
     roundStatus: $("#roundStatus"),
     roundSource: $("#roundSource"),
     roundMetrics: $("#roundMetrics"),
+    curveOnlyPanel: $("#curveOnlyPanel"),
+    curveOnlyTitle: $("#curveOnlyTitle"),
+    curveOnlyText: $("#curveOnlyText"),
+    curveAuditLink: $("#curveAuditLink"),
+    candidateSection: $("#candidateSection"),
     candidateGroupLabel: $("#candidateGroupLabel"),
     positiveLegend: $("#positiveLegend"),
     candidates: $("#candidateGrid"),
@@ -337,7 +343,8 @@
     const url = new URL(window.location.href);
     url.searchParams.set("campaign", state.campaignId);
     url.searchParams.set("round", state.campaign.rounds[state.roundIndex].display_round);
-    url.searchParams.set("candidate", state.candidateK);
+    if (state.campaign.curve_only) url.searchParams.delete("candidate");
+    else url.searchParams.set("candidate", state.candidateK);
     window.history.replaceState(null, "", `${url.pathname}?${url.searchParams}${url.hash}`);
   }
 
@@ -375,6 +382,7 @@
   async function loadCampaign(id, requested = {}) {
     const record = state.manifest.campaigns.find((item) => item.id === id);
     if (!record) throw new Error(`Unknown campaign: ${id}`);
+    if (dom.inspector.classList.contains("expanded")) setInspectorExpanded(false);
     state.campaign = await fetchJson(`static/data/${record.data_path}`);
     state.requestSerial += 1;
     state.campaignId = id;
@@ -383,6 +391,7 @@
     dom.campaignSelect.value = id;
     dom.curveTitle.textContent = state.campaign.chart_title || `${state.campaign.short_label} evolution curve`;
     dom.slider.max = String(state.campaign.rounds.length - 1);
+    dom.sliderStart.textContent = `Round ${state.campaign.rounds[0].display_round}`;
     dom.sliderEnd.textContent = `Round ${state.campaign.rounds.at(-1).display_round}`;
     const singleRound = state.campaign.rounds.length === 1;
     dom.roundScrubber.hidden = singleRound;
@@ -407,19 +416,22 @@
     }, 0);
     state.roundIndex = requestedIndex >= 0 ? requestedIndex : strongestIndex;
     const round = state.campaign.rounds[state.roundIndex];
+    const candidates = round.candidates || [];
     const requestedCandidate = finite(requested.candidate);
-    state.candidateK = requestedCandidate !== null && round.candidates.some((item) => item.k === requestedCandidate)
+    state.candidateK = requestedCandidate !== null && candidates.some((item) => item.k === requestedCandidate)
       ? requestedCandidate
       : preferredCandidate(round);
     renderCampaign();
-    await loadSelectedCandidate();
+    if (!state.campaign.curve_only) await loadSelectedCandidate();
   }
 
   function preferredCandidate(round) {
-    const promoted = round.candidates.find((candidate) => candidate.promoted);
-    const winner = round.candidates.find((candidate) => candidate.winner);
-    const valid = round.candidates.find((candidate) => candidate.valid && candidate.detail_path);
-    return (promoted || winner || valid || round.candidates[0]).k;
+    const candidates = round.candidates || [];
+    if (!candidates.length) return 0;
+    const promoted = candidates.find((candidate) => candidate.promoted);
+    const winner = candidates.find((candidate) => candidate.winner);
+    const valid = candidates.find((candidate) => candidate.valid && candidate.detail_path);
+    return (promoted || winner || valid || candidates[0]).k;
   }
 
   function renderCampaign() {
@@ -655,6 +667,15 @@
   }
 
   function showChartTooltip(event, round) {
+    if (state.campaign.curve_only) {
+      const sourceRound = round.historical_round === null || round.historical_round === undefined
+        ? "initial anchor"
+        : `source round ${round.historical_round}`;
+      dom.tooltip.innerHTML = `<b>EVOLVE ROUND ${escapeHtml(String(round.display_round).padStart(2, "0"))}</b>${escapeHtml(score(round.score))}<br><span>${escapeHtml(sourceRound)} · ${escapeHtml(integer(round.cumulative_trajectories))} cumulative trajectories</span>`;
+      dom.tooltip.classList.add("visible");
+      positionChartTooltip(event);
+      return;
+    }
     const delta = finite(round.best_causal_delta);
     dom.tooltip.innerHTML = `<b>ROUND ${escapeHtml(String(round.display_round).padStart(2, "0"))}</b>${escapeHtml(score(round.score))}<br><span>best causal lift ${escapeHtml(signed(delta))}</span>`;
     dom.tooltip.classList.add("visible");
@@ -680,16 +701,38 @@
     dom.prev.disabled = state.roundIndex === 0;
     dom.next.disabled = state.roundIndex === state.campaign.rounds.length - 1;
     dom.roundName.textContent = `Round ${String(round.display_round).padStart(2, "0")}`;
-    dom.roundStatus.textContent = state.campaign.chart_mode === "batch"
+    dom.roundStatus.textContent = state.campaign.curve_only
+      ? round.display_round === 0
+        ? "initial anchor"
+        : round.accepted_improvement
+          ? "historical advance"
+          : "historical plateau"
+      : state.campaign.chart_mode === "batch"
       ? "historical audit batch"
       : round.is_graft
       ? "externally seeded"
       : round.accepted_improvement
         ? "incumbent advanced"
         : "no ratchet";
-    dom.roundSource.href = `${state.campaign.source_base_url || "https://github.com/gray311/SAH/"}${round.source || ""}`;
+    dom.roundSource.href = round.source_url || `${state.campaign.source_base_url || "https://github.com/gray311/SAH/"}${round.source || ""}`;
+    dom.roundSource.innerHTML = `${state.campaign.curve_only ? "curve ledger" : "artifact index"} <span>&nearr;</span>`;
     renderEvent(round);
     renderMetrics(round);
+    dom.curveOnlyPanel.hidden = !state.campaign.curve_only;
+    dom.candidateSection.hidden = Boolean(state.campaign.curve_only);
+    dom.inspector.hidden = Boolean(state.campaign.curve_only);
+    if (state.campaign.curve_only) {
+      dom.curveOnlyTitle.textContent = "Curve available · per-candidate trajectories archived separately";
+      dom.curveOnlyText.textContent = state.campaign.provenance?.note || "This export contains point-level curve evidence only.";
+      const auditId = state.campaign.audit_campaign_id;
+      dom.curveAuditLink.hidden = !auditId;
+      if (auditId) {
+        const auditRound = state.campaign.audit_round ?? 1;
+        const auditCandidate = state.campaign.audit_candidate ?? 0;
+        dom.curveAuditLink.href = `?campaign=${encodeURIComponent(auditId)}&round=${encodeURIComponent(auditRound)}&candidate=${encodeURIComponent(auditCandidate)}#evolution`;
+      }
+      return;
+    }
     renderCandidates(round);
     if (!loadDetail) {
       state.detail = null;
@@ -745,6 +788,26 @@
   }
 
   function renderMetrics(round) {
+    if (state.campaign.curve_only) {
+      const sourceRound = round.historical_round === null || round.historical_round === undefined
+        ? "anchor"
+        : String(round.historical_round);
+      const gain = finite(round.score_gain);
+      const metrics = [
+        ["incumbent", score(round.score), `initial program ${score(state.campaign.references?.seed)}`],
+        ["change", gain === null ? "—" : signed(gain), gain > 0 ? "advanced" : gain === null ? "starting point" : "retained"],
+        ["launched this round", integer(round.launched_trajectories), "executor trajectories"],
+        ["cumulative compute", integer(round.cumulative_trajectories), "launched executor trajectories"],
+        ["ledger source", sourceRound, round.proposer_state ? `state ${compact(round.proposer_state, 24)}` : "paper artifact ledger"],
+      ];
+      dom.roundMetrics.innerHTML = metrics.map(([label, value, note]) => `
+        <div class="round-metric">
+          <span>${escapeHtml(label)}</span>
+          <strong title="${escapeHtml(value)}">${escapeHtml(value)}</strong>
+          <small>${escapeHtml(note)}</small>
+        </div>`).join("");
+      return;
+    }
     const training = round.training || {};
     const comparison = state.campaign.comparison || {};
     const groupSize = round.candidates?.length || 0;
@@ -765,7 +828,7 @@
 
   function renderCandidates(round) {
     dom.candidates.replaceChildren();
-    round.candidates.forEach((candidate) => {
+    (round.candidates || []).forEach((candidate) => {
       const button = document.createElement("button");
       button.type = "button";
       button.setAttribute("role", "listitem");
@@ -818,12 +881,13 @@
     renderChart();
     renderRoundSummary({ loadDetail });
     updateUrl();
-    if (loadDetail) await loadSelectedCandidate();
+    if (loadDetail && !state.campaign.curve_only) await loadSelectedCandidate();
   }
 
   async function loadSelectedCandidate() {
+    if (state.campaign?.curve_only) return;
     const round = state.campaign.rounds[state.roundIndex];
-    const candidate = round.candidates.find((item) => item.k === state.candidateK);
+    const candidate = (round.candidates || []).find((item) => item.k === state.candidateK);
     const requestId = ++state.requestSerial;
     dom.artifactSearch.value = "";
     dom.inspectorLabel.textContent = `ROUND ${String(round.display_round).padStart(2, "0")} · CAND ${String(state.candidateK).padStart(2, "0")}`;
@@ -1028,7 +1092,7 @@
     state.playTimer = null;
     dom.play.classList.remove("playing");
     $("span", dom.play).textContent = "Play";
-    if (loadDetail && state.campaign) loadSelectedCandidate();
+    if (loadDetail && state.campaign && !state.campaign.curve_only) loadSelectedCandidate();
   }
 
   function bindExplorerEvents() {

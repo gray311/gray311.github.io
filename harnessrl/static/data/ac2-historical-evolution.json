@@ -1,0 +1,738 @@
+{
+  "schema": "harnessrl-evolution/1.0",
+  "id": "ac2-historical-evolution",
+  "label": "AC2 · 24-round historical evolve curve",
+  "short_label": "AC2 evolve",
+  "task": "eft__math__second_autocorr_ineq",
+  "direction": "maximize",
+  "description": "Initial program plus 24 historical proposer-weight evolution points, aggregated across prior AC2 campaigns.",
+  "chart_mode": "evolution",
+  "chart_title": "Autocorrelation II · 24-round historical evolve curve",
+  "curve_only": true,
+  "historical_aggregate": true,
+  "included_in_common_budget_metrics": false,
+  "audit_campaign_id": "ac2-round1-audit",
+  "audit_round": 1,
+  "audit_candidate": 3,
+  "source_base_url": "https://github.com/gray311/SAH/blob/main/",
+  "comparison": {
+    "metric": "score_gain",
+    "label": "adjacent ledger change",
+    "short_label": "vs prior point",
+    "control_label": "prior ledger point",
+    "is_causal": false,
+    "note": "Adjacent incumbent-score change; not a paired causal estimate."
+  },
+  "provenance": {
+    "source": "papers/figures/score_compute_curves_data.json",
+    "curve": "proposer_full",
+    "generated_at": "2026-08-03T09:54:40-0700",
+    "git_sha": "0716e7f1cdf868a9033cc4587d40d0951c4d4007",
+    "x": "actual launched executor trajectories",
+    "y": "best valid combined_score normalized by seed and published <=10B reference",
+    "note": "Historical proposer-weight rounds aggregated across prior campaigns. This is not one contiguous matched arm and is excluded from common-budget metrics. The checked-in ledger preserves point-level scores and source-round IDs, not the old per-candidate trajectories."
+  },
+  "references": {
+    "seed": 0.954836,
+    "published_sota": 1.056813
+  },
+  "reference_lines": [
+    {
+      "key": "seed",
+      "label": "INITIAL PROGRAM",
+      "value": 0.954836,
+      "color": "#667287"
+    },
+    {
+      "key": "published_sota",
+      "label": "PUBLISHED ≤10B",
+      "value": 1.056813,
+      "color": "#99a5ba"
+    }
+  ],
+  "summary": {
+    "rounds": 24,
+    "points": 25,
+    "final_score": 1.0420022628581522,
+    "best_score": 1.0420022628581522,
+    "total_trajectories": 206,
+    "accepted_improvements": 13
+  },
+  "rounds": [
+    {
+      "id": "anchor",
+      "step": 0,
+      "display_round": 0,
+      "score": 0.954836,
+      "score_gain": null,
+      "batch_best": null,
+      "base_score": 0.954836,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 1,
+      "launched_trajectories": null,
+      "trajectories": {
+        "executor": 0
+      },
+      "historical_round": null,
+      "proposer_state": null,
+      "accepted_improvement": false,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "",
+        "icon": "0",
+        "heading": "Initial program anchor",
+        "message": "The historical ledger starts at 0.954836 before the 24 recorded outer-loop proposal batches."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-390",
+      "step": 1,
+      "display_round": 1,
+      "score": 1.003838774717377,
+      "score_gain": 0.04900277471737691,
+      "batch_best": null,
+      "base_score": 0.954836,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 6,
+      "launched_trajectories": 6,
+      "trajectories": {
+        "executor": 6
+      },
+      "historical_round": 390,
+      "proposer_state": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+      "accepted_improvement": true,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "success",
+        "icon": "+",
+        "heading": "Historical incumbent advanced",
+        "message": "Ledger source round 390 raised the retained score by +0.049003 after 6 launched executor trajectories."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-391",
+      "step": 2,
+      "display_round": 2,
+      "score": 1.0257944388142504,
+      "score_gain": 0.02195566409687344,
+      "batch_best": null,
+      "base_score": 1.003838774717377,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 13,
+      "launched_trajectories": 7,
+      "trajectories": {
+        "executor": 7
+      },
+      "historical_round": 391,
+      "proposer_state": "mphi_f_secondau_00",
+      "accepted_improvement": true,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "success",
+        "icon": "+",
+        "heading": "Historical incumbent advanced",
+        "message": "Ledger source round 391 raised the retained score by +0.021956 after 7 launched executor trajectories."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-392",
+      "step": 3,
+      "display_round": 3,
+      "score": 1.0257944388142504,
+      "score_gain": 0.0,
+      "batch_best": null,
+      "base_score": 1.0257944388142504,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 18,
+      "launched_trajectories": 5,
+      "trajectories": {
+        "executor": 5
+      },
+      "historical_round": 392,
+      "proposer_state": "mphi_f_secondau_01",
+      "accepted_improvement": false,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "",
+        "icon": "=",
+        "heading": "Historical incumbent retained",
+        "message": "Ledger source round 392 used 5 launched executor trajectories without advancing the best valid score."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-393",
+      "step": 4,
+      "display_round": 4,
+      "score": 1.0266517990950754,
+      "score_gain": 0.0008573602808250591,
+      "batch_best": null,
+      "base_score": 1.0257944388142504,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 23,
+      "launched_trajectories": 5,
+      "trajectories": {
+        "executor": 5
+      },
+      "historical_round": 393,
+      "proposer_state": "mphi_f_secondau_02",
+      "accepted_improvement": true,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "success",
+        "icon": "+",
+        "heading": "Historical incumbent advanced",
+        "message": "Ledger source round 393 raised the retained score by +0.000857 after 5 launched executor trajectories."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-394",
+      "step": 5,
+      "display_round": 5,
+      "score": 1.0287207504545426,
+      "score_gain": 0.002068951359467164,
+      "batch_best": null,
+      "base_score": 1.0266517990950754,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 31,
+      "launched_trajectories": 8,
+      "trajectories": {
+        "executor": 8
+      },
+      "historical_round": 394,
+      "proposer_state": "mphi_f_secondau_03",
+      "accepted_improvement": true,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "success",
+        "icon": "+",
+        "heading": "Historical incumbent advanced",
+        "message": "Ledger source round 394 raised the retained score by +0.002069 after 8 launched executor trajectories."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-395",
+      "step": 6,
+      "display_round": 6,
+      "score": 1.0333589020204474,
+      "score_gain": 0.004638151565904858,
+      "batch_best": null,
+      "base_score": 1.0287207504545426,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 39,
+      "launched_trajectories": 8,
+      "trajectories": {
+        "executor": 8
+      },
+      "historical_round": 395,
+      "proposer_state": "mphi_f_secondau_04",
+      "accepted_improvement": true,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "success",
+        "icon": "+",
+        "heading": "Historical incumbent advanced",
+        "message": "Ledger source round 395 raised the retained score by +0.004638 after 8 launched executor trajectories."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-396",
+      "step": 7,
+      "display_round": 7,
+      "score": 1.034305150626441,
+      "score_gain": 0.0009462486059934605,
+      "batch_best": null,
+      "base_score": 1.0333589020204474,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 46,
+      "launched_trajectories": 7,
+      "trajectories": {
+        "executor": 7
+      },
+      "historical_round": 396,
+      "proposer_state": "mphi_f_secondau_05",
+      "accepted_improvement": true,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "success",
+        "icon": "+",
+        "heading": "Historical incumbent advanced",
+        "message": "Ledger source round 396 raised the retained score by +0.000946 after 7 launched executor trajectories."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-397",
+      "step": 8,
+      "display_round": 8,
+      "score": 1.034305150626441,
+      "score_gain": 0.0,
+      "batch_best": null,
+      "base_score": 1.034305150626441,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 54,
+      "launched_trajectories": 8,
+      "trajectories": {
+        "executor": 8
+      },
+      "historical_round": 397,
+      "proposer_state": "mphi_f_secondau_06",
+      "accepted_improvement": false,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "",
+        "icon": "=",
+        "heading": "Historical incumbent retained",
+        "message": "Ledger source round 397 used 8 launched executor trajectories without advancing the best valid score."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-560",
+      "step": 9,
+      "display_round": 9,
+      "score": 1.0349240770139092,
+      "score_gain": 0.0006189263874682993,
+      "batch_best": null,
+      "base_score": 1.034305150626441,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 70,
+      "launched_trajectories": 16,
+      "trajectories": {
+        "executor": 16
+      },
+      "historical_round": 560,
+      "proposer_state": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+      "accepted_improvement": true,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "success",
+        "icon": "+",
+        "heading": "Historical incumbent advanced",
+        "message": "Ledger source round 560 raised the retained score by +0.000619 after 16 launched executor trajectories."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-561",
+      "step": 10,
+      "display_round": 10,
+      "score": 1.0366307829627677,
+      "score_gain": 0.0017067059488584668,
+      "batch_best": null,
+      "base_score": 1.0349240770139092,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 85,
+      "launched_trajectories": 15,
+      "trajectories": {
+        "executor": 15
+      },
+      "historical_round": 561,
+      "proposer_state": "mphi_f_secondau_00",
+      "accepted_improvement": true,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "success",
+        "icon": "+",
+        "heading": "Historical incumbent advanced",
+        "message": "Ledger source round 561 raised the retained score by +0.001707 after 15 launched executor trajectories."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-700",
+      "step": 11,
+      "display_round": 11,
+      "score": 1.0384116166007777,
+      "score_gain": 0.0017808336380100709,
+      "batch_best": null,
+      "base_score": 1.0366307829627677,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 101,
+      "launched_trajectories": 16,
+      "trajectories": {
+        "executor": 16
+      },
+      "historical_round": 700,
+      "proposer_state": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+      "accepted_improvement": true,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "success",
+        "icon": "+",
+        "heading": "Historical incumbent advanced",
+        "message": "Ledger source round 700 raised the retained score by +0.001781 after 16 launched executor trajectories."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-701",
+      "step": 12,
+      "display_round": 12,
+      "score": 1.0389565184020462,
+      "score_gain": 0.000544901801268427,
+      "batch_best": null,
+      "base_score": 1.0384116166007777,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 114,
+      "launched_trajectories": 13,
+      "trajectories": {
+        "executor": 13
+      },
+      "historical_round": 701,
+      "proposer_state": "mphi_f_secondau_00",
+      "accepted_improvement": true,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "success",
+        "icon": "+",
+        "heading": "Historical incumbent advanced",
+        "message": "Ledger source round 701 raised the retained score by +0.000545 after 13 launched executor trajectories."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-840",
+      "step": 13,
+      "display_round": 13,
+      "score": 1.0389565184020462,
+      "score_gain": 0.0,
+      "batch_best": null,
+      "base_score": 1.0389565184020462,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 122,
+      "launched_trajectories": 8,
+      "trajectories": {
+        "executor": 8
+      },
+      "historical_round": 840,
+      "proposer_state": "mphi_f_secondau_01",
+      "accepted_improvement": false,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "",
+        "icon": "=",
+        "heading": "Historical incumbent retained",
+        "message": "Ledger source round 840 used 8 launched executor trajectories without advancing the best valid score."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-841",
+      "step": 14,
+      "display_round": 14,
+      "score": 1.0389565184020462,
+      "score_gain": 0.0,
+      "batch_best": null,
+      "base_score": 1.0389565184020462,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 130,
+      "launched_trajectories": 8,
+      "trajectories": {
+        "executor": 8
+      },
+      "historical_round": 841,
+      "proposer_state": "mphi_f_secondau_01",
+      "accepted_improvement": false,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "",
+        "icon": "=",
+        "heading": "Historical incumbent retained",
+        "message": "Ledger source round 841 used 8 launched executor trajectories without advancing the best valid score."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-842",
+      "step": 15,
+      "display_round": 15,
+      "score": 1.0389565184020462,
+      "score_gain": 0.0,
+      "batch_best": null,
+      "base_score": 1.0389565184020462,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 137,
+      "launched_trajectories": 7,
+      "trajectories": {
+        "executor": 7
+      },
+      "historical_round": 842,
+      "proposer_state": "mphi_f_secondau_01",
+      "accepted_improvement": false,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "",
+        "icon": "=",
+        "heading": "Historical incumbent retained",
+        "message": "Ledger source round 842 used 7 launched executor trajectories without advancing the best valid score."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-843",
+      "step": 16,
+      "display_round": 16,
+      "score": 1.0419893435191034,
+      "score_gain": 0.0030328251170572695,
+      "batch_best": null,
+      "base_score": 1.0389565184020462,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 144,
+      "launched_trajectories": 7,
+      "trajectories": {
+        "executor": 7
+      },
+      "historical_round": 843,
+      "proposer_state": "mphi_f_secondau_02",
+      "accepted_improvement": true,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "success",
+        "icon": "+",
+        "heading": "Historical incumbent advanced",
+        "message": "Ledger source round 843 raised the retained score by +0.003033 after 7 launched executor trajectories."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-844",
+      "step": 17,
+      "display_round": 17,
+      "score": 1.0420012103228637,
+      "score_gain": 1.1866803760307576e-05,
+      "batch_best": null,
+      "base_score": 1.0419893435191034,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 151,
+      "launched_trajectories": 7,
+      "trajectories": {
+        "executor": 7
+      },
+      "historical_round": 844,
+      "proposer_state": "mphi_f_secondau_03",
+      "accepted_improvement": true,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "success",
+        "icon": "+",
+        "heading": "Historical incumbent advanced",
+        "message": "Ledger source round 844 raised the retained score by +0.000012 after 7 launched executor trajectories."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-845",
+      "step": 18,
+      "display_round": 18,
+      "score": 1.0420012103228637,
+      "score_gain": 0.0,
+      "batch_best": null,
+      "base_score": 1.0420012103228637,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 159,
+      "launched_trajectories": 8,
+      "trajectories": {
+        "executor": 8
+      },
+      "historical_round": 845,
+      "proposer_state": "mphi_f_secondau_04",
+      "accepted_improvement": false,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "",
+        "icon": "=",
+        "heading": "Historical incumbent retained",
+        "message": "Ledger source round 845 used 8 launched executor trajectories without advancing the best valid score."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-846",
+      "step": 19,
+      "display_round": 19,
+      "score": 1.0420012103228637,
+      "score_gain": 0.0,
+      "batch_best": null,
+      "base_score": 1.0420012103228637,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 167,
+      "launched_trajectories": 8,
+      "trajectories": {
+        "executor": 8
+      },
+      "historical_round": 846,
+      "proposer_state": "mphi_f_secondau_05",
+      "accepted_improvement": false,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "",
+        "icon": "=",
+        "heading": "Historical incumbent retained",
+        "message": "Ledger source round 846 used 8 launched executor trajectories without advancing the best valid score."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-847",
+      "step": 20,
+      "display_round": 20,
+      "score": 1.0420022628581522,
+      "score_gain": 1.052535288481593e-06,
+      "batch_best": null,
+      "base_score": 1.0420012103228637,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 175,
+      "launched_trajectories": 8,
+      "trajectories": {
+        "executor": 8
+      },
+      "historical_round": 847,
+      "proposer_state": "mphi_f_secondau_06",
+      "accepted_improvement": true,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "success",
+        "icon": "+",
+        "heading": "Historical incumbent advanced",
+        "message": "Ledger source round 847 raised the retained score by +0.000001 after 8 launched executor trajectories."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-848",
+      "step": 21,
+      "display_round": 21,
+      "score": 1.0420022628581522,
+      "score_gain": 0.0,
+      "batch_best": null,
+      "base_score": 1.0420022628581522,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 183,
+      "launched_trajectories": 8,
+      "trajectories": {
+        "executor": 8
+      },
+      "historical_round": 848,
+      "proposer_state": "mphi_f_secondau_07",
+      "accepted_improvement": false,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "",
+        "icon": "=",
+        "heading": "Historical incumbent retained",
+        "message": "Ledger source round 848 used 8 launched executor trajectories without advancing the best valid score."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-849",
+      "step": 22,
+      "display_round": 22,
+      "score": 1.0420022628581522,
+      "score_gain": 0.0,
+      "batch_best": null,
+      "base_score": 1.0420022628581522,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 190,
+      "launched_trajectories": 7,
+      "trajectories": {
+        "executor": 7
+      },
+      "historical_round": 849,
+      "proposer_state": "mphi_f_secondau_07",
+      "accepted_improvement": false,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "",
+        "icon": "=",
+        "heading": "Historical incumbent retained",
+        "message": "Ledger source round 849 used 7 launched executor trajectories without advancing the best valid score."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-850",
+      "step": 23,
+      "display_round": 23,
+      "score": 1.0420022628581522,
+      "score_gain": 0.0,
+      "batch_best": null,
+      "base_score": 1.0420022628581522,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 198,
+      "launched_trajectories": 8,
+      "trajectories": {
+        "executor": 8
+      },
+      "historical_round": 850,
+      "proposer_state": "mphi_f_secondau_07",
+      "accepted_improvement": false,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "",
+        "icon": "=",
+        "heading": "Historical incumbent retained",
+        "message": "Ledger source round 850 used 8 launched executor trajectories without advancing the best valid score."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    },
+    {
+      "id": "historical-round-851",
+      "step": 24,
+      "display_round": 24,
+      "score": 1.0420022628581522,
+      "score_gain": 0.0,
+      "batch_best": null,
+      "base_score": 1.0420022628581522,
+      "best_causal_delta": null,
+      "cumulative_trajectories": 206,
+      "launched_trajectories": 8,
+      "trajectories": {
+        "executor": 8
+      },
+      "historical_round": 851,
+      "proposer_state": "mphi_f_secondau_10",
+      "accepted_improvement": false,
+      "is_graft": false,
+      "candidates": [],
+      "event": {
+        "tone": "",
+        "icon": "=",
+        "heading": "Historical incumbent retained",
+        "message": "Ledger source round 851 used 8 launched executor trajectories without advancing the best valid score."
+      },
+      "source": "papers/figures/score_compute_curves_data.json"
+    }
+  ]
+}
