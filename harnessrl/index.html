@@ -31,10 +31,10 @@
         <span></span><span></span><span></span>
       </button>
       <div class="nav-links" id="navLinks">
+        <a href="#results">Results</a>
         <a href="#idea">Idea</a>
         <a href="#examples">Harnesses</a>
         <a href="#evolution">Evolution explorer</a>
-        <a href="#results">Results</a>
         <a href="#artifacts">Artifacts</a>
       </div>
     </div>
@@ -50,8 +50,8 @@
           control logic, and new tools&mdash;while a 9B inner-loop executor remains frozen.
         </p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#evolution">
-            Explore the evolution
+          <a class="button button-primary" href="#results">
+            View the results
             <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" /></svg>
           </a>
           <a class="button button-secondary" href="https://github.com/gray311/SAH" target="_blank" rel="noopener">
@@ -105,6 +105,56 @@
   </section>
 
   <main>
+    <section id="results" class="section results-section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Results</span>
+          <h2>A frozen 9B executor, pushed by a learned harness.</h2>
+          <p>HarnessRL (weight) exceeds the discovery-finetuned Finch-9B on all eleven tasks and reaches five published &le;10B best results.</p>
+        </div>
+
+        <div class="results-layout">
+          <figure class="paper-figure radar-figure reveal">
+            <img src="static/images/radar_method_ablation.png" alt="Radar comparison across eleven discovery tasks" />
+            <figcaption><b>Performance across all eleven tasks.</b> Axes are direction-corrected and independently rescaled; outward is better.</figcaption>
+          </figure>
+          <div class="result-callouts">
+            <article class="result-callout reveal"><strong>11 / 11</strong><h3>Beyond Finch-9B</h3><p>The same frozen Qwen3.5-9B executor, with proposer adaptation instead of discovery finetuning.</p></article>
+            <article class="result-callout reveal"><strong>0.380919</strong><h3>Erd&#337;s minimum overlap</h3><p>Narrowly improves on the best known human construction shown in the evaluation suite.</p></article>
+            <article class="result-callout reveal"><strong>26.26</strong><h3>PRISM</h3><p>Matches the strongest closed-model result reported under OpenEvolve.</p></article>
+          </div>
+        </div>
+
+        <div class="table-heading reveal">
+          <span class="mono-label">OPEN-MODEL COMPARISON · NATIVE UNITS</span>
+          <h3>Main results</h3>
+        </div>
+        <div class="table-scroll reveal">
+          <table class="results-table">
+            <thead>
+              <tr class="group-row"><th></th><th colspan="5">Mathematical discovery</th><th colspan="2">Algorithm engineering</th><th colspan="4">System performance</th></tr>
+              <tr><th>Method</th><th>Erd&#337;s &darr;</th><th>AC1 &darr;</th><th>AC2 &uarr;</th><th>CP &uarr;</th><th>Had. &uarr;</th><th>ahc039 &uarr;</th><th>ahc058 &uarr;</th><th>EPLB &uarr;</th><th>PRISM &uarr;</th><th>SQL &uarr;</th><th>Txn &uarr;</th></tr>
+            </thead>
+            <tbody>
+              <tr class="seed-row"><td>Initial program</td><td>0.495056</td><td>1.5186</td><td>0.8558</td><td>0.959764</td><td>0.143275</td><td>534,850</td><td>0</td><td>0.1265</td><td>21.89</td><td>0.6856</td><td>2824.86</td></tr>
+              <tr class="section-row"><td colspan="12">OpenEvolve + open-source models</td></tr>
+              <tr><td>Finch-2B</td><td>0.381346</td><td>1.5184</td><td>0.8920</td><td>1.535134</td><td>0.400476</td><td>545,256</td><td>329,359,253</td><td>0.1269</td><td>22.26</td><td>0.6860</td><td>2949.85</td></tr>
+              <tr><td>Qwen3.5-2B</td><td>0.381737</td><td>1.5186</td><td>0.8646</td><td>1.253056</td><td>0.478009</td><td>546,078</td><td>0</td><td>0.1265</td><td>21.89</td><td>0.6856</td><td>2832.86</td></tr>
+              <tr><td>Finch-4B</td><td>0.386460</td><td>1.5173</td><td>0.8933</td><td>1.806808</td><td>0.146199</td><td>551,844</td><td>331,466,883</td><td>0.1267</td><td>22.87</td><td>0.6857</td><td class="best-other">4761.90</td></tr>
+              <tr><td>Qwen3.5-4B</td><td>0.416924</td><td>1.5186</td><td>0.8802</td><td>1.680787</td><td>0.384332</td><td>542,077</td><td>0</td><td>0.1266</td><td>21.89</td><td>0.6856</td><td>2732.24</td></tr>
+              <tr><td>Finch-9B</td><td>0.381100</td><td>1.5141</td><td>0.9122</td><td>1.936000</td><td>0.480585</td><td>553,759</td><td>525,286,896</td><td>0.1265</td><td>23.93</td><td>0.7024</td><td>3636.36</td></tr>
+              <tr><td>Qwen3.5-9B</td><td>0.385512</td><td>1.5186</td><td>0.8801</td><td>1.172702</td><td>0.397184</td><td>553,582</td><td>134,486,700</td><td>0.1269</td><td>22.36</td><td>0.6858</td><td>3584.23</td></tr>
+              <tr class="section-row ours-section"><td colspan="12">Ours · frozen Qwen3.5-9B executor</td></tr>
+              <tr class="ours-row"><td>HarnessRL <span>initial</span></td><td>0.456591</td><td>1.5182</td><td>0.8961</td><td>1.477767</td><td>0.360961</td><td>557,225</td><td>134,487,000</td><td>0.1265</td><td>24.02</td><td>0.0934</td><td>3610.11</td></tr>
+              <tr class="ours-row"><td>HarnessRL <span>context</span></td><td>0.395849</td><td class="best">1.5098</td><td>0.9263</td><td>2.370463</td><td>0.517212</td><td class="best">559,534</td><td>562,824,208</td><td class="best">0.1278</td><td>23.04</td><td>0.7267</td><td>3906.25</td></tr>
+              <tr class="ours-row weight-row"><td>HarnessRL <span>weight</span></td><td class="best">0.380919</td><td class="best">1.5098</td><td class="best">0.9339</td><td class="best">2.502000</td><td class="best">0.573283</td><td class="best">559,534</td><td class="best">713,552,303</td><td>0.1272</td><td class="best">26.26</td><td class="best">0.7415</td><td>4255.32</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note reveal">The LLM-SQL winner carries a curated-note provenance caveat and is excluded from SOTA claims. Full per-task sources and evaluator caveats remain in the paper artifact ledger.</p>
+      </div>
+    </section>
+
     <section id="idea" class="section">
       <div class="container">
         <div class="section-heading reveal">
@@ -313,56 +363,6 @@
       </div>
     </section>
 
-    <section id="results" class="section results-section">
-      <div class="container">
-        <div class="section-heading reveal">
-          <span class="eyebrow">Results</span>
-          <h2>A frozen 9B executor, pushed by a learned harness.</h2>
-          <p>HarnessRL (weight) exceeds the discovery-finetuned Finch-9B on all eleven tasks and reaches five published &le;10B best results.</p>
-        </div>
-
-        <div class="results-layout">
-          <figure class="paper-figure radar-figure reveal">
-            <img src="static/images/radar_method_ablation.png" alt="Radar comparison across eleven discovery tasks" />
-            <figcaption><b>Performance across all eleven tasks.</b> Axes are direction-corrected and independently rescaled; outward is better.</figcaption>
-          </figure>
-          <div class="result-callouts">
-            <article class="result-callout reveal"><strong>11 / 11</strong><h3>Beyond Finch-9B</h3><p>The same frozen Qwen3.5-9B executor, with proposer adaptation instead of discovery finetuning.</p></article>
-            <article class="result-callout reveal"><strong>0.380919</strong><h3>Erd&#337;s minimum overlap</h3><p>Narrowly improves on the best known human construction shown in the evaluation suite.</p></article>
-            <article class="result-callout reveal"><strong>26.26</strong><h3>PRISM</h3><p>Matches the strongest closed-model result reported under OpenEvolve.</p></article>
-          </div>
-        </div>
-
-        <div class="table-heading reveal">
-          <span class="mono-label">OPEN-MODEL COMPARISON · NATIVE UNITS</span>
-          <h3>Main results</h3>
-        </div>
-        <div class="table-scroll reveal">
-          <table class="results-table">
-            <thead>
-              <tr class="group-row"><th></th><th colspan="5">Mathematical discovery</th><th colspan="2">Algorithm engineering</th><th colspan="4">System performance</th></tr>
-              <tr><th>Method</th><th>Erd&#337;s &darr;</th><th>AC1 &darr;</th><th>AC2 &uarr;</th><th>CP &uarr;</th><th>Had. &uarr;</th><th>ahc039 &uarr;</th><th>ahc058 &uarr;</th><th>EPLB &uarr;</th><th>PRISM &uarr;</th><th>SQL &uarr;</th><th>Txn &uarr;</th></tr>
-            </thead>
-            <tbody>
-              <tr class="seed-row"><td>Initial program</td><td>0.495056</td><td>1.5186</td><td>0.8558</td><td>0.959764</td><td>0.143275</td><td>534,850</td><td>0</td><td>0.1265</td><td>21.89</td><td>0.6856</td><td>2824.86</td></tr>
-              <tr class="section-row"><td colspan="12">OpenEvolve + open-source models</td></tr>
-              <tr><td>Finch-2B</td><td>0.381346</td><td>1.5184</td><td>0.8920</td><td>1.535134</td><td>0.400476</td><td>545,256</td><td>329,359,253</td><td>0.1269</td><td>22.26</td><td>0.6860</td><td>2949.85</td></tr>
-              <tr><td>Qwen3.5-2B</td><td>0.381737</td><td>1.5186</td><td>0.8646</td><td>1.253056</td><td>0.478009</td><td>546,078</td><td>0</td><td>0.1265</td><td>21.89</td><td>0.6856</td><td>2832.86</td></tr>
-              <tr><td>Finch-4B</td><td>0.386460</td><td>1.5173</td><td>0.8933</td><td>1.806808</td><td>0.146199</td><td>551,844</td><td>331,466,883</td><td>0.1267</td><td>22.87</td><td>0.6857</td><td class="best-other">4761.90</td></tr>
-              <tr><td>Qwen3.5-4B</td><td>0.416924</td><td>1.5186</td><td>0.8802</td><td>1.680787</td><td>0.384332</td><td>542,077</td><td>0</td><td>0.1266</td><td>21.89</td><td>0.6856</td><td>2732.24</td></tr>
-              <tr><td>Finch-9B</td><td>0.381100</td><td>1.5141</td><td>0.9122</td><td>1.936000</td><td>0.480585</td><td>553,759</td><td>525,286,896</td><td>0.1265</td><td>23.93</td><td>0.7024</td><td>3636.36</td></tr>
-              <tr><td>Qwen3.5-9B</td><td>0.385512</td><td>1.5186</td><td>0.8801</td><td>1.172702</td><td>0.397184</td><td>553,582</td><td>134,486,700</td><td>0.1269</td><td>22.36</td><td>0.6858</td><td>3584.23</td></tr>
-              <tr class="section-row ours-section"><td colspan="12">Ours · frozen Qwen3.5-9B executor</td></tr>
-              <tr class="ours-row"><td>HarnessRL <span>initial</span></td><td>0.456591</td><td>1.5182</td><td>0.8961</td><td>1.477767</td><td>0.360961</td><td>557,225</td><td>134,487,000</td><td>0.1265</td><td>24.02</td><td>0.0934</td><td>3610.11</td></tr>
-              <tr class="ours-row"><td>HarnessRL <span>context</span></td><td>0.395849</td><td class="best">1.5098</td><td>0.9263</td><td>2.370463</td><td>0.517212</td><td class="best">559,534</td><td>562,824,208</td><td class="best">0.1278</td><td>23.04</td><td>0.7267</td><td>3906.25</td></tr>
-              <tr class="ours-row weight-row"><td>HarnessRL <span>weight</span></td><td class="best">0.380919</td><td class="best">1.5098</td><td class="best">0.9339</td><td class="best">2.502000</td><td class="best">0.573283</td><td class="best">559,534</td><td class="best">713,552,303</td><td>0.1272</td><td class="best">26.26</td><td class="best">0.7415</td><td>4255.32</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="table-note reveal">The LLM-SQL winner carries a curated-note provenance caveat and is excluded from SOTA claims. Full per-task sources and evaluator caveats remain in the paper artifact ledger.</p>
-      </div>
-    </section>
-
     <section id="artifacts" class="section artifact-section">
       <div class="container">
         <div class="section-heading reveal">
@@ -424,7 +424,7 @@
         <a class="brand footer-brand" href="#top"><span class="brand-mark"><i></i><i></i><i></i></span><span>HarnessRL</span></a>
         <p>Self-adaptive harness learning for test-time discovery.</p>
       </div>
-      <div class="footer-links"><a href="#idea">Idea</a><a href="#evolution">Explorer</a><a href="#results">Results</a><a href="https://github.com/gray311/SAH" target="_blank" rel="noopener">Code</a></div>
+      <div class="footer-links"><a href="#results">Results</a><a href="#idea">Idea</a><a href="#evolution">Explorer</a><a href="https://github.com/gray311/SAH" target="_blank" rel="noopener">Code</a></div>
       <p class="footer-meta">Static, dependency-free, and backed by exported campaign evidence.</p>
     </div>
   </footer>
