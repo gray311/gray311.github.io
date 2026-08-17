@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="HarnessRL learns an outer-loop harness proposer while keeping the inner-loop executor frozen. Explore every proposal, harness, rollout, reward, and update." />
+  <meta name="theme-color" content="#f6f4ed" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="HarnessRL · Watch a Harness Learn" />
+  <meta property="og:description" content="Replay every proposal, executable harness, frozen-executor rollout, paired reward, and proposer update." />
+  <meta property="og:url" content="https://gray311.github.io/harnessrl/" />
+  <meta property="og:image" content="https://gray311.github.io/harnessrl/static/images/method_self_evolution.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>HarnessRL · Watch a Harness Learn</title>
+  <link rel="canonical" href="https://gray311.github.io/harnessrl/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700&amp;family=Roboto+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="static/css/style.css" />
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <nav class="navbar" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="HarnessRL home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>HarnessRL</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="#idea">Idea</a>
+        <a href="#evolution">Evolution explorer</a>
+        <a href="#results">Results</a>
+        <a href="#artifacts">Artifacts</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="hero-grid container-wide">
+      <div class="hero-copy">
+        <div class="kicker"><span class="live-dot"></span> Interactive research preview</div>
+        <h1>Don&rsquo;t update the solver.<br /><em>Teach the harness to improve.</em></h1>
+        <p class="hero-lead">
+          HarnessRL trains the outer-loop proposer to synthesize prompts, skills,
+          control logic, and new tools&mdash;while a 9B inner-loop executor remains frozen.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#evolution">
+            Explore the evolution
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" /></svg>
+          </a>
+          <a class="button button-secondary" href="https://github.com/gray311/SAH" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .8A11.2 11.2 0 0 0 8.46 22.6c.56.1.77-.24.77-.54v-2.13c-3.13.68-3.8-1.33-3.8-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.03-.7.08-.69.08-.69 1.13.08 1.73 1.17 1.73 1.17 1.01 1.73 2.65 1.23 3.3.94.1-.73.4-1.23.72-1.51-2.5-.29-5.13-1.25-5.13-5.54 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.43.11-2.98 0 0 .95-.3 3.08 1.15a10.7 10.7 0 0 1 5.62 0c2.14-1.45 3.08-1.15 3.08-1.15.62 1.55.23 2.7.12 2.98.72.79 1.15 1.8 1.15 3.02 0 4.3-2.64 5.25-5.15 5.53.4.35.76 1.04.76 2.1v3.1c0 .3.2.65.78.54A11.2 11.2 0 0 0 12 .8Z" /></svg>
+            Code
+          </a>
+        </div>
+        <p class="hero-note">Every visible score links back to an exported campaign artifact. No executor weight update is hidden behind the curve.</p>
+      </div>
+
+      <div class="hero-system" aria-label="HarnessRL feedback loop">
+        <div class="system-glow"></div>
+        <div class="loop-card proposer-card">
+          <span class="loop-index">01</span>
+          <span class="loop-label">learned outer loop</span>
+          <strong>Proposer <i>&pi;<sub>&phi;</sub></i></strong>
+          <small>reads experience &amp; proposes how to solve</small>
+        </div>
+        <div class="flow-line flow-a"><span></span></div>
+        <div class="candidate-orbit" aria-hidden="true">
+          <span>H<sub>2</sub></span><span>H<sub>2</sub></span><span>H<sub>2</sub></span><span>H<sub>2</sub></span>
+          <span>H<sub>2</sub></span><span>H<sub>2</sub></span><span>H<sub>2</sub></span><span>H<sub>2</sub></span>
+          <b>K = 8 executable harnesses</b>
+        </div>
+        <div class="flow-line flow-b"><span></span></div>
+        <div class="loop-card executor-card">
+          <span class="loop-index">02</span>
+          <span class="frozen-badge">Frozen</span>
+          <strong>Executor <i>M<sub>0</sub></i></strong>
+          <small>runs each harness and edits the solution</small>
+        </div>
+        <div class="reward-route">
+          <span class="reward-pulse">r</span>
+          <div><b>paired rollout reward</b><small>candidate &minus; same-seed control</small></div>
+        </div>
+        <svg class="loop-arrow" viewBox="0 0 180 138" aria-hidden="true">
+          <path d="M160 125C18 144-20 48 56 12" />
+          <path d="m48 12 12-4-2 13" />
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <section class="stat-band" aria-label="Headline results">
+    <div class="container stats-grid">
+      <div class="stat reveal"><strong>11<span>/11</span></strong><p>tasks above Finch-9B</p></div>
+      <div class="stat reveal"><strong>5</strong><p>published &le;10B best results</p></div>
+      <div class="stat reveal"><strong>9<span>B</span></strong><p>frozen inner executor</p></div>
+      <div class="stat reveal"><strong>8</strong><p>harness candidates per round</p></div>
+    </div>
+  </section>
+
+  <main>
+    <section id="idea" class="section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">The idea</span>
+          <h2>Move test-time learning one level outward.</h2>
+          <p>Existing frozen-executor systems can retain a better artifact, but their proposal policy stays fixed. HarnessRL makes that policy itself adaptive.</p>
+        </div>
+
+        <div class="idea-grid">
+          <article class="idea-card reveal">
+            <span class="idea-number">01</span>
+            <h3>Propose an executable agent</h3>
+            <p>The proposer emits a complete NexAU harness: system prompt, mounted skills, tools, middleware, and control parameters.</p>
+          </article>
+          <article class="idea-card reveal">
+            <span class="idea-number">02</span>
+            <h3>Measure causal lift</h3>
+            <p>Each candidate and its incumbent control use the same decode seed. Credit is based on their score difference, not the candidate score alone.</p>
+          </article>
+          <article class="idea-card reveal">
+            <span class="idea-number">03</span>
+            <h3>Update only the proposer</h3>
+            <p>RLOO turns the eight outer-loop trajectories into a proposer update. The executor checkpoint never changes.</p>
+          </article>
+        </div>
+
+        <figure class="paper-figure reveal">
+          <img src="static/images/method_self_evolution.png" alt="HarnessRL self-evolution method overview" />
+          <figcaption><b>Two nested loops, one learning policy.</b> Explicit harness artifacts connect proposal, execution, reward, and the next outer-loop update.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="evolution" class="section explorer-section">
+      <div class="container-wide">
+        <div class="section-heading section-heading-light reveal">
+          <span class="eyebrow">Evidence explorer</span>
+          <h2>Replay the evolve process, one decision at a time.</h2>
+          <p>Select a curve point, inspect all eight sibling harnesses, then open the exact proposer, executor, control, reward, and training artifacts.</p>
+        </div>
+
+        <div class="explorer" id="explorer" aria-busy="true">
+          <div class="explorer-loading" id="explorerLoading">
+            <span class="loader"></span>
+            <p>Loading exported campaign evidence&hellip;</p>
+          </div>
+
+          <div class="explorer-app" id="explorerApp" hidden>
+            <div class="explorer-toolbar">
+              <label class="field-label" for="campaignSelect">Task replay</label>
+              <select id="campaignSelect" class="select"></select>
+              <div class="toolbar-spacer"></div>
+              <span class="evidence-status"><i></i> evidence-linked</span>
+              <button class="icon-button" id="prevRound" type="button" aria-label="Previous round">
+                <svg viewBox="0 0 20 20"><path d="m12.5 4-6 6 6 6" /></svg>
+              </button>
+              <button class="play-button" id="playRounds" type="button" aria-label="Play evolution">
+                <svg class="play-icon" viewBox="0 0 20 20"><path d="m7 4 9 6-9 6Z" /></svg>
+                <svg class="pause-icon" viewBox="0 0 20 20"><path d="M6 4h3v12H6zM11 4h3v12h-3z" /></svg>
+                <span>Play</span>
+              </button>
+              <button class="icon-button" id="nextRound" type="button" aria-label="Next round">
+                <svg viewBox="0 0 20 20"><path d="m7.5 4 6 6-6 6" /></svg>
+              </button>
+            </div>
+
+            <div class="curve-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="mono-label">NORMALIZED INCUMBENT SCORE</span>
+                  <h3 id="curveTitle">Evolution curve</h3>
+                </div>
+                <div class="curve-legend" id="curveLegend"></div>
+              </div>
+              <div class="chart-wrap" id="chartWrap">
+                <svg id="curveChart" viewBox="0 0 1040 360" role="img" aria-label="Interactive evolution score curve"></svg>
+                <div class="chart-tooltip" id="chartTooltip" role="status"></div>
+              </div>
+              <div class="round-scrubber">
+                <span>Round 1</span>
+                <input id="roundSlider" type="range" min="0" max="19" value="4" step="1" aria-label="Select evolution round" />
+                <span id="roundSliderEnd">Round 20</span>
+              </div>
+              <div class="event-note" id="eventNote"></div>
+            </div>
+
+            <div class="round-header">
+              <div>
+                <span class="mono-label">SELECTED ROUND</span>
+                <h3><span id="roundName">Round 05</span> <small id="roundStatus"></small></h3>
+              </div>
+              <a class="source-link" id="roundSource" href="#" target="_blank" rel="noopener">artifact index <span>&nearr;</span></a>
+            </div>
+
+            <div class="round-metrics" id="roundMetrics"></div>
+
+            <div class="candidate-section">
+              <div class="candidate-heading">
+                <div>
+                  <span class="mono-label">RLOO GROUP · K = 8</span>
+                  <h3>Candidate harnesses</h3>
+                </div>
+                <div class="candidate-legend">
+                  <span><i class="dot-positive"></i> positive causal lift</span>
+                  <span><i class="dot-repaired"></i> repaired</span>
+                  <span><i class="dot-invalid"></i> invalid</span>
+                </div>
+              </div>
+              <div class="candidate-grid" id="candidateGrid" role="list"></div>
+            </div>
+
+            <div class="inspector" id="inspector">
+              <div class="inspector-head">
+                <div>
+                  <span class="mono-label" id="inspectorLabel">ROUND 05 · CAND 01</span>
+                  <h3 id="inspectorTitle">Generated harness</h3>
+                </div>
+                <div class="inspector-actions">
+                  <label class="artifact-search">
+                    <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" /><path d="m13 13 4 4" /></svg>
+                    <input id="artifactSearch" type="search" placeholder="Find in artifact" autocomplete="off" />
+                  </label>
+                  <button class="copy-button" id="copyArtifact" type="button">Copy</button>
+                </div>
+              </div>
+              <div class="candidate-meta" id="candidateMeta"></div>
+              <div class="stage-tabs" id="stageTabs" role="tablist" aria-label="Artifact stage"></div>
+              <div class="artifact-view" id="artifactView">
+                <div class="artifact-placeholder">Select a candidate to load its evidence.</div>
+              </div>
+              <div class="artifact-foot">
+                <span id="artifactSource">&mdash;</span>
+                <span id="artifactMatchCount"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="explorer-error" id="explorerError" hidden>
+            <h3>Could not load the artifact bundle.</h3>
+            <p>Serve this directory over HTTP and regenerate the data with <code>python3 website/scripts/build_evolution_data.py</code>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="section results-section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Results</span>
+          <h2>A frozen 9B executor, pushed by a learned harness.</h2>
+          <p>HarnessRL (weight) exceeds the discovery-finetuned Finch-9B on all eleven tasks and reaches five published &le;10B best results.</p>
+        </div>
+
+        <div class="results-layout">
+          <figure class="paper-figure radar-figure reveal">
+            <img src="static/images/radar_method_ablation.png" alt="Radar comparison across eleven discovery tasks" />
+            <figcaption><b>Performance across all eleven tasks.</b> Axes are direction-corrected and independently rescaled; outward is better.</figcaption>
+          </figure>
+          <div class="result-callouts">
+            <article class="result-callout reveal"><strong>11 / 11</strong><h3>Beyond Finch-9B</h3><p>The same frozen Qwen3.5-9B executor, with proposer adaptation instead of discovery finetuning.</p></article>
+            <article class="result-callout reveal"><strong>0.380919</strong><h3>Erd&#337;s minimum overlap</h3><p>Narrowly improves on the best known human construction shown in the evaluation suite.</p></article>
+            <article class="result-callout reveal"><strong>26.26</strong><h3>PRISM</h3><p>Matches the strongest closed-model result reported under OpenEvolve.</p></article>
+          </div>
+        </div>
+
+        <div class="table-heading reveal">
+          <span class="mono-label">OPEN-MODEL COMPARISON · NATIVE UNITS</span>
+          <h3>Main results</h3>
+        </div>
+        <div class="table-scroll reveal">
+          <table class="results-table">
+            <thead>
+              <tr class="group-row"><th></th><th colspan="5">Mathematical discovery</th><th colspan="2">Algorithm engineering</th><th colspan="4">System performance</th></tr>
+              <tr><th>Method</th><th>Erd&#337;s &darr;</th><th>AC1 &darr;</th><th>AC2 &uarr;</th><th>CP &uarr;</th><th>Had. &uarr;</th><th>ahc039 &uarr;</th><th>ahc058 &uarr;</th><th>EPLB &uarr;</th><th>PRISM &uarr;</th><th>SQL &uarr;</th><th>Txn &uarr;</th></tr>
+            </thead>
+            <tbody>
+              <tr class="seed-row"><td>Initial program</td><td>0.495056</td><td>1.5186</td><td>0.8558</td><td>0.959764</td><td>0.143275</td><td>534,850</td><td>0</td><td>0.1265</td><td>21.89</td><td>0.6856</td><td>2824.86</td></tr>
+              <tr class="section-row"><td colspan="12">OpenEvolve + open-source models</td></tr>
+              <tr><td>Finch-2B</td><td>0.381346</td><td>1.5184</td><td>0.8920</td><td>1.535134</td><td>0.400476</td><td>545,256</td><td>329,359,253</td><td>0.1269</td><td>22.26</td><td>0.6860</td><td>2949.85</td></tr>
+              <tr><td>Qwen3.5-2B</td><td>0.381737</td><td>1.5186</td><td>0.8646</td><td>1.253056</td><td>0.478009</td><td>546,078</td><td>0</td><td>0.1265</td><td>21.89</td><td>0.6856</td><td>2832.86</td></tr>
+              <tr><td>Finch-4B</td><td>0.386460</td><td>1.5173</td><td>0.8933</td><td>1.806808</td><td>0.146199</td><td>551,844</td><td>331,466,883</td><td>0.1267</td><td>22.87</td><td>0.6857</td><td class="best-other">4761.90</td></tr>
+              <tr><td>Qwen3.5-4B</td><td>0.416924</td><td>1.5186</td><td>0.8802</td><td>1.680787</td><td>0.384332</td><td>542,077</td><td>0</td><td>0.1266</td><td>21.89</td><td>0.6856</td><td>2732.24</td></tr>
+              <tr><td>Finch-9B</td><td>0.381100</td><td>1.5141</td><td>0.9122</td><td>1.936000</td><td>0.480585</td><td>553,759</td><td>525,286,896</td><td>0.1265</td><td>23.93</td><td>0.7024</td><td>3636.36</td></tr>
+              <tr><td>Qwen3.5-9B</td><td>0.385512</td><td>1.5186</td><td>0.8801</td><td>1.172702</td><td>0.397184</td><td>553,582</td><td>134,486,700</td><td>0.1269</td><td>22.36</td><td>0.6858</td><td>3584.23</td></tr>
+              <tr class="section-row ours-section"><td colspan="12">Ours · frozen Qwen3.5-9B executor</td></tr>
+              <tr class="ours-row"><td>HarnessRL <span>initial</span></td><td>0.456591</td><td>1.5182</td><td>0.8961</td><td>1.477767</td><td>0.360961</td><td>557,225</td><td>134,487,000</td><td>0.1265</td><td>24.02</td><td>0.0934</td><td>3610.11</td></tr>
+              <tr class="ours-row"><td>HarnessRL <span>context</span></td><td>0.395849</td><td class="best">1.5098</td><td>0.9263</td><td>2.370463</td><td>0.517212</td><td class="best">559,534</td><td>562,824,208</td><td class="best">0.1278</td><td>23.04</td><td>0.7267</td><td>3906.25</td></tr>
+              <tr class="ours-row weight-row"><td>HarnessRL <span>weight</span></td><td class="best">0.380919</td><td class="best">1.5098</td><td class="best">0.9339</td><td class="best">2.502000</td><td class="best">0.573283</td><td class="best">559,534</td><td class="best">713,552,303</td><td>0.1272</td><td class="best">26.26</td><td class="best">0.7415</td><td>4255.32</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note reveal">The LLM-SQL winner carries a curated-note provenance caveat and is excluded from SOTA claims. Full per-task sources and evaluator caveats remain in the paper artifact ledger.</p>
+      </div>
+    </section>
+
+    <section id="artifacts" class="section artifact-section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Artifact anatomy</span>
+          <h2>Improvement leaves a readable object behind.</h2>
+          <p>Unlike an executor weight update, every intervention can be inspected, replayed, rejected, or transferred as a concrete package.</p>
+        </div>
+
+        <div class="artifact-flow reveal" aria-label="Artifact sequence">
+          <div><span>01</span><b>Proposer input</b><small>task + incumbent + experience</small></div>
+          <i>&rarr;</i>
+          <div><span>02</span><b>Proposer trajectory</b><small>hypothesis and file operations</small></div>
+          <i>&rarr;</i>
+          <div><span>03</span><b>Harness package</b><small>prompt, skills, tools, middleware</small></div>
+          <i>&rarr;</i>
+          <div><span>04</span><b>Executor rollout</b><small>edits, probes, evaluations</small></div>
+          <i>&rarr;</i>
+          <div><span>05</span><b>Paired reward</b><small>same-seed causal comparison</small></div>
+        </div>
+
+        <div class="artifact-grid">
+          <figure class="paper-figure reveal">
+            <img src="static/images/harness_anatomy.png" alt="Anatomy of a HarnessRL executable harness" />
+            <figcaption><b>An executable intervention.</b> The generated harness is compiled and validated before it can drive the frozen executor.</figcaption>
+          </figure>
+          <div class="audit-card reveal">
+            <span class="mono-label">WHY THE EXPLORER SHOWS FAILURES</span>
+            <h3>Auditability is not a highlight reel.</h3>
+            <p>The public replay retains invalid proposals, frozen-executor repairs, rejected proposer updates, plateaus, and an externally directed seed graft.</p>
+            <ul>
+              <li><b>Paired controls</b> distinguish a useful harness from rollout luck.</li>
+              <li><b>Component lineage</b> distinguishes inherited, added, and removed capabilities.</li>
+              <li><b>Training boundaries</b> show whether proposer weights actually changed.</li>
+              <li><b>Graft annotations</b> prevent imported incumbents from appearing as learned jumps.</li>
+            </ul>
+            <a href="#evolution">Open the evidence explorer <span>&rarr;</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="#top"><span class="brand-mark"><i></i><i></i><i></i></span><span>HarnessRL</span></a>
+        <p>Self-adaptive harness learning for test-time discovery.</p>
+      </div>
+      <div class="footer-links"><a href="#idea">Idea</a><a href="#evolution">Explorer</a><a href="#results">Results</a><a href="https://github.com/gray311/SAH" target="_blank" rel="noopener">Code</a></div>
+      <p class="footer-meta">Static, dependency-free, and backed by exported campaign evidence.</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "schema": "harnessrl-site-manifest/1.0",
+  "default_campaign": "cp20-final",
+  "campaigns": [
+    {
+      "id": "cp20-final",
+      "label": "Circle Packing · n=26",
+      "task": "eft__math__circle_packing",
+      "data_path": "cp20-final.json"
+    }
+  ]
+}
