@@ -32,6 +32,7 @@
       </button>
       <div class="nav-links" id="navLinks">
         <a href="#idea">Idea</a>
+        <a href="#examples">Harnesses</a>
         <a href="#evolution">Evolution explorer</a>
         <a href="#results">Results</a>
         <a href="#artifacts">Artifacts</a>
@@ -137,6 +138,55 @@
       </div>
     </section>
 
+    <section id="examples" class="section examples-section">
+      <div class="container-wide">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Harness library</span>
+          <h2>Beyond CP26: nine executable harnesses.</h2>
+          <p>The learned object changes with the task. Browse accepted packages from extremal mathematics, heuristic search, and systems&mdash;then inspect the exact prompt, skill, tool, middleware, and control files.</p>
+        </div>
+
+        <div class="example-library reveal" id="exampleLibrary" aria-busy="true">
+          <div class="example-loading" id="exampleLoading"><span class="loader"></span><p>Loading executable harness packages&hellip;</p></div>
+          <div class="example-app" id="exampleApp" hidden>
+            <div class="example-tabs" id="exampleTabs" role="tablist" aria-label="Harness task examples"></div>
+            <div class="example-showcase">
+              <div class="example-story">
+                <div class="example-story-top">
+                  <span class="example-category" id="exampleCategory">Task family</span>
+                  <span class="example-count" id="exampleCount">01 / 09</span>
+                </div>
+                <h3 id="exampleTitle">Harness example</h3>
+                <p class="example-thesis" id="exampleThesis"></p>
+                <p class="example-detail" id="exampleDetail"></p>
+                <div class="example-controls" id="exampleControls"></div>
+                <a class="example-replay" id="exampleReplay" href="#evolution" hidden>Open full replay <span>&rarr;</span></a>
+                <p class="example-provenance">Accepted package example <span>&middot;</span> not a reconstructed evolution curve</p>
+              </div>
+
+              <div class="example-package">
+                <div class="example-package-head">
+                  <div><span class="mono-label">WHAT THE PROPOSER LEFT BEHIND</span><h3>Executable components</h3></div>
+                  <span class="package-status"><i></i> materialized</span>
+                </div>
+                <div class="example-components" id="exampleComponents"></div>
+
+                <div class="example-file-view">
+                  <div class="example-file-head">
+                    <div class="example-file-tabs" id="exampleFileTabs" role="tablist" aria-label="Harness package files"></div>
+                    <button class="example-copy" id="exampleCopy" type="button">Copy</button>
+                  </div>
+                  <pre id="exampleFileContent" tabindex="0"></pre>
+                  <div class="example-file-foot"><span id="exampleFileSource">&mdash;</span><span id="exampleFileLanguage">&mdash;</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="example-error" id="exampleError" hidden>Harness package examples could not be loaded.</div>
+        </div>
+      </div>
+    </section>
+
     <section id="evolution" class="section explorer-section">
       <div class="container-wide">
         <div class="section-heading section-heading-light reveal">
@@ -173,7 +223,7 @@
             <div class="curve-panel">
               <div class="panel-heading">
                 <div>
-                  <span class="mono-label">NORMALIZED INCUMBENT SCORE</span>
+                  <span class="mono-label" id="curveMetricLabel">NORMALIZED INCUMBENT SCORE</span>
                   <h3 id="curveTitle">Evolution curve</h3>
                 </div>
                 <div class="curve-legend" id="curveLegend"></div>
@@ -182,7 +232,7 @@
                 <svg id="curveChart" viewBox="0 0 1040 360" role="img" aria-label="Interactive evolution score curve"></svg>
                 <div class="chart-tooltip" id="chartTooltip" role="status"></div>
               </div>
-              <div class="round-scrubber">
+              <div class="round-scrubber" id="roundScrubber">
                 <span>Round 1</span>
                 <input id="roundSlider" type="range" min="0" max="19" value="4" step="1" aria-label="Select evolution round" />
                 <span id="roundSliderEnd">Round 20</span>
@@ -203,11 +253,11 @@
             <div class="candidate-section">
               <div class="candidate-heading">
                 <div>
-                  <span class="mono-label">RLOO GROUP · K = 8</span>
+                  <span class="mono-label" id="candidateGroupLabel">RLOO GROUP · K = 8</span>
                   <h3>Candidate harnesses</h3>
                 </div>
                 <div class="candidate-legend">
-                  <span><i class="dot-positive"></i> positive causal lift</span>
+                  <span id="positiveLegend"><i class="dot-positive"></i> positive causal lift</span>
                   <span><i class="dot-repaired"></i> repaired</span>
                   <span><i class="dot-invalid"></i> invalid</span>
                 </div>

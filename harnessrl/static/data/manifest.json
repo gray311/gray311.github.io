@@ -7,6 +7,13 @@
       "label": "Circle Packing · n=26",
       "task": "eft__math__circle_packing",
       "data_path": "cp20-final.json"
+    },
+    {
+      "id": "ac2-round1-audit",
+      "label": "AC2 · eight-harness attribution audit",
+      "task": "eft__math__second_autocorr_ineq",
+      "data_path": "ac2-round1-audit.json"
     }
-  ]
+  ],
+  "harness_library": "harness-examples.json"
 }

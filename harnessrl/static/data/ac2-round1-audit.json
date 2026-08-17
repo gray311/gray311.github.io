@@ -1,0 +1,312 @@
+{
+  "schema": "harnessrl-evolution/1.0",
+  "id": "ac2-round1-audit",
+  "label": "AC2 · eight-harness attribution audit",
+  "short_label": "AC2 audit",
+  "task": "eft__math__second_autocorr_ineq",
+  "direction": "maximize",
+  "description": "One historical proposer batch with eight complete proposer-to-executor evidence chains.",
+  "chart_mode": "batch",
+  "chart_title": "AC2 · scores from one eight-harness proposer batch",
+  "source_base_url": "https://github.com/gray311/SAH/blob/results/ac2-round001-6186121/results/debug-evolve-qwen35-6186121/ac2_round001/",
+  "comparison": {
+    "metric": "reward",
+    "label": "outer-loop training reward",
+    "short_label": "training reward",
+    "control_label": "incumbent",
+    "is_causal": false,
+    "note": "SAH_ADV=v2 reward around the current harness base; not a paired causal estimate"
+  },
+  "provenance": {
+    "source": "debug-evolve-qwen35-6186121/inspection/ac2_round001",
+    "curve": null,
+    "graft": null,
+    "note": "Historical debugging bundle. It is shown for auditability and is not used as a final-result claim."
+  },
+  "references": {
+    "seed": 0.9548269841969006,
+    "incumbent": 0.9997888936813033,
+    "target": 1.0
+  },
+  "reference_lines": [
+    {
+      "key": "seed",
+      "label": "INITIAL PROGRAM",
+      "value": 0.9548269841969006,
+      "color": "#667287"
+    },
+    {
+      "key": "incumbent",
+      "label": "CURRENT HARNESS",
+      "value": 0.9997888936813033,
+      "color": "#e99345"
+    },
+    {
+      "key": "target",
+      "label": "NORMALIZED TARGET",
+      "value": 1.0,
+      "color": "#99a5ba"
+    }
+  ],
+  "summary": {
+    "rounds": 1,
+    "final_score": 0.9997888936813033,
+    "best_score": 0.9957583321880714,
+    "total_trajectories": 16,
+    "valid_candidates": 8,
+    "repaired_candidates": 0,
+    "self_authored_candidates": 8,
+    "accepted_improvements": 0
+  },
+  "rounds": [
+    {
+      "id": "round001",
+      "step": 1,
+      "display_round": 1,
+      "score": 0.9997888936813033,
+      "batch_best": 0.9957583321880714,
+      "base_score": 0.9548269841969006,
+      "best_causal_delta": -0.00403141254586218,
+      "reward_mean": -0.022659849569541007,
+      "reward_std": 0.013599877213428015,
+      "cumulative_trajectories": 16,
+      "trajectories": {
+        "proposer": 8,
+        "executor": 8
+      },
+      "gate": {
+        "passed": true,
+        "valid": 8,
+        "repaired": 0,
+        "self_authored": 8,
+        "invalid": 0
+      },
+      "winner_k": 3,
+      "accepted_improvement": false,
+      "program_ratchet": {
+        "promoted": false,
+        "reason": "batch best remained below incumbent"
+      },
+      "training": {
+        "classification": "one-step LoRA update",
+        "weights_updated": true,
+        "method_update_valid": true,
+        "skip_reason": null,
+        "rejection": null,
+        "source": "training/16_training_final_audit.json"
+      },
+      "is_graft": false,
+      "graft_note": null,
+      "event": {
+        "tone": "warning",
+        "icon": "!",
+        "heading": "Historical attribution audit",
+        "message": "All eight original scores remained below the 0.999790 incumbent. The bundle preserves the cand03 skill-not-enacted bug; its attached patched replay shows the runtime-injection and exact-budget fix. Only cand01 has a later same-seed paired control."
+      },
+      "candidates": [
+        {
+          "id": "cand00",
+          "k": 0,
+          "valid": true,
+          "repaired": false,
+          "winner": false,
+          "promoted": false,
+          "score": 0.992403556450761,
+          "control_score": 0.9997888936813033,
+          "comparison_delta": -0.007386896643712506,
+          "causal_delta": null,
+          "reward": -0.007386896643712506,
+          "advantage": 0.05746333384839138,
+          "attribution_valid": false,
+          "attribution_status": "legacy incumbent-relative reward",
+          "changed_fields": [
+            "system_prompt"
+          ],
+          "change_type": "prompt",
+          "review_log": [],
+          "spec_hash": "sha256:bf7737f9136f3eef",
+          "detail_path": "candidates/ac2-round001-cand00.json",
+          "round": "round001",
+          "decode_seed": 200000
+        },
+        {
+          "id": "cand01",
+          "k": 1,
+          "valid": true,
+          "repaired": false,
+          "winner": false,
+          "promoted": false,
+          "score": 0.9805204322650442,
+          "control_score": 0.9997888936813033,
+          "comparison_delta": -0.019272529949836303,
+          "causal_delta": 0.002375950194698717,
+          "reward": -0.019272529949836303,
+          "advantage": -0.008883756437446912,
+          "attribution_valid": true,
+          "attribution_status": "later paired audit attached",
+          "changed_fields": [
+            "system_prompt"
+          ],
+          "change_type": "prompt",
+          "review_log": [],
+          "spec_hash": "sha256:c159c1a3f73a60db",
+          "detail_path": "candidates/ac2-round001-cand01.json",
+          "round": "round001",
+          "decode_seed": 200001
+        },
+        {
+          "id": "cand02",
+          "k": 2,
+          "valid": true,
+          "repaired": false,
+          "winner": false,
+          "promoted": false,
+          "score": 0.970224531137343,
+          "control_score": 0.9997888936813033,
+          "comparison_delta": -0.029570605055964726,
+          "causal_delta": null,
+          "reward": -0.029570605055964726,
+          "advantage": -0.033556731517047245,
+          "attribution_valid": false,
+          "attribution_status": "legacy incumbent-relative reward",
+          "changed_fields": [
+            "system_prompt"
+          ],
+          "change_type": "prompt",
+          "review_log": [],
+          "spec_hash": "sha256:cdf7829f0f28c592",
+          "detail_path": "candidates/ac2-round001-cand02.json",
+          "round": "round001",
+          "decode_seed": 200002
+        },
+        {
+          "id": "cand03",
+          "k": 3,
+          "valid": true,
+          "repaired": false,
+          "winner": true,
+          "promoted": false,
+          "score": 0.9957583321880714,
+          "control_score": 0.9997888936813033,
+          "comparison_delta": -0.00403141254586218,
+          "causal_delta": null,
+          "reward": -0.00403141254586218,
+          "advantage": 0.09225050604484299,
+          "attribution_valid": false,
+          "attribution_status": "skill mounted, not loaded; patched replay attached",
+          "changed_fields": [
+            "system_prompt",
+            "new_skills.c2-optimization"
+          ],
+          "change_type": "mixed",
+          "review_log": [],
+          "spec_hash": "sha256:ee2cc60ca1b1f5f4",
+          "detail_path": "candidates/ac2-round001-cand03.json",
+          "round": "round001",
+          "decode_seed": 200003
+        },
+        {
+          "id": "cand04",
+          "k": 4,
+          "valid": true,
+          "repaired": false,
+          "winner": false,
+          "promoted": false,
+          "score": 0.9607464215643968,
+          "control_score": 0.9997888936813033,
+          "comparison_delta": -0.039050715930738375,
+          "causal_delta": null,
+          "reward": -0.039050715930738375,
+          "advantage": -0.04686146941614589,
+          "attribution_valid": false,
+          "attribution_status": "legacy incumbent-relative reward",
+          "changed_fields": [
+            "system_prompt"
+          ],
+          "change_type": "prompt",
+          "review_log": [],
+          "spec_hash": "sha256:62f4749fd8fca5f1",
+          "detail_path": "candidates/ac2-round001-cand04.json",
+          "round": "round001",
+          "decode_seed": 200004
+        },
+        {
+          "id": "cand05",
+          "k": 5,
+          "valid": true,
+          "repaired": false,
+          "winner": false,
+          "promoted": false,
+          "score": 0.9857115313515428,
+          "control_score": 0.9997888936813033,
+          "comparison_delta": -0.014080334763318101,
+          "causal_delta": null,
+          "reward": -0.014080334763318101,
+          "advantage": 0.01238888562444855,
+          "attribution_valid": false,
+          "attribution_status": "legacy incumbent-relative reward",
+          "changed_fields": [
+            "system_prompt"
+          ],
+          "change_type": "prompt",
+          "review_log": [],
+          "spec_hash": "sha256:1552966d2a0f8a9c",
+          "detail_path": "candidates/ac2-round001-cand05.json",
+          "round": "round001",
+          "decode_seed": 200005
+        },
+        {
+          "id": "cand06",
+          "k": 6,
+          "valid": true,
+          "repaired": false,
+          "winner": false,
+          "promoted": false,
+          "score": 0.9548269841969006,
+          "control_score": 0.9997888936813033,
+          "comparison_delta": -0.0449714031868047,
+          "causal_delta": null,
+          "reward": -0.0449714031868047,
+          "advantage": -0.053245732859932865,
+          "attribution_valid": false,
+          "attribution_status": "legacy incumbent-relative reward",
+          "changed_fields": [
+            "system_prompt"
+          ],
+          "change_type": "prompt",
+          "review_log": [],
+          "spec_hash": "sha256:b0502797035659cd",
+          "detail_path": "candidates/ac2-round001-cand06.json",
+          "round": "round001",
+          "decode_seed": 200006
+        },
+        {
+          "id": "cand07",
+          "k": 7,
+          "valid": true,
+          "repaired": false,
+          "winner": false,
+          "promoted": false,
+          "score": 0.9768788326581587,
+          "control_score": 0.9997888936813033,
+          "comparison_delta": -0.022914898480091178,
+          "causal_delta": null,
+          "reward": -0.022914898480091178,
+          "advantage": -0.019555035287110018,
+          "attribution_valid": false,
+          "attribution_status": "legacy incumbent-relative reward",
+          "changed_fields": [
+            "system_prompt"
+          ],
+          "change_type": "prompt",
+          "review_log": [],
+          "spec_hash": "sha256:5bd7fb3afffbe97e",
+          "detail_path": "candidates/ac2-round001-cand07.json",
+          "round": "round001",
+          "decode_seed": 200007
+        }
+      ],
+      "source": "artifact_index.json"
+    }
+  ]
+}

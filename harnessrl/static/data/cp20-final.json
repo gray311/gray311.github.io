@@ -6,6 +6,17 @@
   "task": "eft__math__circle_packing",
   "direction": "maximize",
   "description": "Twenty rounds of normalized-score harness evolution with a frozen Qwen3.5-9B executor.",
+  "chart_mode": "evolution",
+  "chart_title": "Circle packing · 20-round incumbent curve",
+  "source_base_url": "https://github.com/gray311/SAH/blob/main/results/cp20_final/",
+  "comparison": {
+    "metric": "causal_delta",
+    "label": "paired causal lift",
+    "short_label": "vs paired control",
+    "control_label": "paired control",
+    "is_causal": true,
+    "note": "candidate − same-seed paired incumbent control"
+  },
   "provenance": {
     "source": "results/cp20_final",
     "curve": "campaign/curve.jsonl",
@@ -26,6 +37,26 @@
     "finch_9b": 0.734725,
     "published_sota": 1.000373
   },
+  "reference_lines": [
+    {
+      "key": "seed",
+      "label": "INITIAL PROGRAM",
+      "value": 0.3642368945,
+      "color": "#667287"
+    },
+    {
+      "key": "finch_9b",
+      "label": "FINCH-9B",
+      "value": 0.734725,
+      "color": "#e99345"
+    },
+    {
+      "key": "published_sota",
+      "label": "PUBLISHED BEST",
+      "value": 1.000373,
+      "color": "#99a5ba"
+    }
+  ],
   "summary": {
     "rounds": 20,
     "final_score": 0.9644862832020149,
