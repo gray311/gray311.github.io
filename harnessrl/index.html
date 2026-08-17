@@ -9,7 +9,7 @@
   <meta property="og:title" content="HarnessRL · Watch a Harness Learn" />
   <meta property="og:description" content="Replay every proposal, executable harness, frozen-executor rollout, paired reward, and proposer update." />
   <meta property="og:url" content="https://gray311.github.io/harnessrl/" />
-  <meta property="og:image" content="https://gray311.github.io/harnessrl/static/images/method_self_evolution.png" />
+  <meta property="og:image" content="https://gray311.github.io/harnessrl/static/images/method_overview.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <title>HarnessRL · Watch a Harness Learn</title>
   <link rel="canonical" href="https://gray311.github.io/harnessrl/" />
@@ -131,8 +131,8 @@
         </div>
 
         <figure class="paper-figure reveal">
-          <img src="static/images/method_self_evolution.png" alt="HarnessRL self-evolution method overview" />
-          <figcaption><b>Two nested loops, one learning policy.</b> Explicit harness artifacts connect proposal, execution, reward, and the next outer-loop update.</figcaption>
+          <img src="static/images/method_overview.png" alt="HarnessRL method: a trainable proposer creates K harnesses that pass leakage-controlled review, drive a frozen executor, and receive RLOO rewards" />
+          <figcaption><b>The HarnessRL learning loop.</b> The proposer synthesizes executable harnesses; review and materialization make them runnable; scores from the frozen executor update only the proposer.</figcaption>
         </figure>
       </div>
     </section>
@@ -226,6 +226,10 @@
                     <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" /><path d="m13 13 4 4" /></svg>
                     <input id="artifactSearch" type="search" placeholder="Find in artifact" autocomplete="off" />
                   </label>
+                  <button class="expand-button" id="expandArtifact" type="button" aria-pressed="false">
+                    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4M13 3h4v4M7 17H3v-4M13 17h4v-4" /></svg>
+                    <span>Fullscreen</span>
+                  </button>
                   <button class="copy-button" id="copyArtifact" type="button">Copy</button>
                 </div>
               </div>
@@ -303,8 +307,8 @@
       <div class="container">
         <div class="section-heading reveal">
           <span class="eyebrow">Artifact anatomy</span>
-          <h2>Improvement leaves a readable object behind.</h2>
-          <p>Unlike an executor weight update, every intervention can be inspected, replayed, rejected, or transferred as a concrete package.</p>
+          <h2>Every improvement leaves an inspectable artifact.</h2>
+          <p>A score change can be traced from the proposer&rsquo;s hypothesis to a runnable agent package, the executor&rsquo;s actions, and its paired reward.</p>
         </div>
 
         <div class="artifact-flow reveal" aria-label="Artifact sequence">
@@ -320,10 +324,23 @@
         </div>
 
         <div class="artifact-grid">
-          <figure class="paper-figure reveal">
-            <img src="static/images/harness_anatomy.png" alt="Anatomy of a HarnessRL executable harness" />
-            <figcaption><b>An executable intervention.</b> The generated harness is compiled and validated before it can drive the frozen executor.</figcaption>
-          </figure>
+          <div class="harness-package reveal" aria-label="Anatomy of an executable HarnessRL harness">
+            <div class="package-heading">
+              <div><span class="mono-label">EXECUTABLE AGENT PACKAGE</span><h3>Harness <i>H<sub>k</sub></i></h3></div>
+              <span class="package-status"><i></i> compiled &amp; valid</span>
+            </div>
+            <div class="package-root"><span>mount authority</span><strong>agent.yaml</strong><small>binds every component below</small></div>
+            <div class="package-connector" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="package-components">
+              <div><span>01</span><b>prompt.md</b><small>strategy &amp; workflow</small></div>
+              <div><span>02</span><b>tools/</b><small>schemas &amp; generated code</small></div>
+              <div><span>03</span><b>skills/</b><small>task playbooks</small></div>
+              <div><span>04</span><b>middlewares/</b><small>automatic runtime control</small></div>
+              <div><span>05</span><b>model config</b><small>sampling &amp; context</small></div>
+              <div><span>06</span><b>control policy</b><small>budget, stalls &amp; restarts</small></div>
+            </div>
+            <div class="package-output"><span>materialize</span><i>&rarr;</i><b>runnable NexAU agent</b><i>&rarr;</i><span>frozen executor</span></div>
+          </div>
           <div class="audit-card reveal">
             <span class="mono-label">WHY THE EXPLORER SHOWS FAILURES</span>
             <h3>Auditability is not a highlight reel.</h3>

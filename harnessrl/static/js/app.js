@@ -40,6 +40,7 @@
     artifactSource: $("#artifactSource"),
     artifactSearch: $("#artifactSearch"),
     artifactMatches: $("#artifactMatchCount"),
+    expandArtifact: $("#expandArtifact"),
     copyArtifact: $("#copyArtifact"),
     toast: $("#toast"),
   };
@@ -677,9 +678,11 @@
   function renderActiveArtifact() {
     const artifact = state.detail?.artifacts.find((item) => item.id === state.activeArtifactId);
     if (!artifact) {
+      dom.inspector.classList.remove("trajectory-active");
       dom.artifactView.innerHTML = '<div class="artifact-placeholder">No artifact selected.</div>';
       return;
     }
+    dom.inspector.classList.toggle("trajectory-active", artifact.format === "trajectory");
     const term = dom.artifactSearch.value.trim();
     if (artifact.format === "trajectory" && Array.isArray(artifact.content)) {
       const turns = artifact.content.map((turn, index) => {
@@ -699,6 +702,14 @@
     dom.artifactMatches.textContent = term ? `${matches} match${matches === 1 ? "" : "es"}` : "";
     dom.artifactSource.textContent = artifact.source;
     dom.inspectorTitle.textContent = artifact.label;
+  }
+
+  function setInspectorExpanded(expanded) {
+    dom.inspector.classList.toggle("expanded", expanded);
+    document.body.classList.toggle("artifact-expanded", expanded);
+    dom.expandArtifact.setAttribute("aria-pressed", String(expanded));
+    $("span", dom.expandArtifact).textContent = expanded ? "Exit fullscreen" : "Fullscreen";
+    dom.expandArtifact.setAttribute("aria-label", expanded ? "Exit artifact fullscreen" : "Open artifact fullscreen");
   }
 
   function togglePlaying() {
@@ -754,6 +765,9 @@
       selectRound(Number(dom.slider.value), true);
     });
     dom.artifactSearch.addEventListener("input", renderActiveArtifact);
+    dom.expandArtifact.addEventListener("click", () => {
+      setInspectorExpanded(!dom.inspector.classList.contains("expanded"));
+    });
     dom.copyArtifact.addEventListener("click", async () => {
       const artifact = state.detail?.artifacts.find((item) => item.id === state.activeArtifactId);
       if (!artifact) return;
@@ -774,6 +788,10 @@
       }
     });
     window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && dom.inspector.classList.contains("expanded")) {
+        setInspectorExpanded(false);
+        return;
+      }
       const target = event.target;
       if (target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement) return;
       if (event.key === "ArrowLeft") {
